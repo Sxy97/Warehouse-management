@@ -62,7 +62,7 @@ router.get('/query/findByOid/:oid',queryController.findByOid)
 router.get('/word/out/:oid',wordController.exportWord)
 
 /**
- * 入库出库单签字后图片保存 
+ * 入库出库单签字后图片保存 TODO
  */
 
 module.exports = router;
