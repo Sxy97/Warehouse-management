@@ -23,21 +23,5 @@ exports.query=function(sql,options,callback){
         }
     });
 };
-// exports.query=function(sql,options){
-//     return new Promise(function (resolve, reject) {
-//         pool.getConnection(function(err,conn){
-//             if(err){
-//                 console.log(err)
-//                 reject(err);
-//             }else{
-//                 conn.query(sql,options,function(err,results,fields){
-//                     //释放连接
-//                     conn.release();
-//                     //事件驱动回调
-//                     resolve(results);
-//                 });
-//             }
-//         });
-//     })
-// };
 exports.pool=pool;
+

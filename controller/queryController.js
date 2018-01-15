@@ -53,7 +53,7 @@ exports.input = async function (req, res) {
         var limt = Number(req.query.limt) || config.limt //每页显示条数
         limt = limt > 0 ? limt : config.limt
         page = page > 0 ? page : 1;
-        const data = await sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, closetime, type,page,limt)
+        const data = await sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, closetime, type, page, limt)
         for (let i = 0; i < data.result.length; i++) {
             data.result[i].time = sd.format(new Date(data.result[i].time))
             if (data.result[i].com_cat == 1) {
@@ -80,18 +80,14 @@ exports.goods = function (req, res) {
     if (!sname && !size) {
         writeJson(res, 0, "搜索条件为空")
     } else {
-        const val = []
         if (!sname) {
-            var sql = "select sname,size,unit,price from input where size=?  group by sname,size"
-            val.push(size)
+            var sql = `select sname,size,unit,price from input where size like '%${size}%' group by sname,size`
         } else if (!size) {
-            var sql = "select sname,size,unit,price from input where sname=?  group by sname,size"
-            val.push(sname)
+            var sql = `select sname,size,unit,price from input where sname like '%${sname}%'  group by sname,size`
         } else {
-            var sql = "select sname,size,unit,price from input where sname=? and size=?  group by sname,size"
-            val.push(sname, size)
+            var sql = `select sname,size,unit,price from input where sname like '%${sname}%' and size like '%${size}%'  group by sname,size`
         }
-        db.query(sql, val, async function (err, result) {
+        db.query(sql, [], async function (err, result) {
             if (err) {
                 writeJson(res, 0, err)
             } else {
@@ -151,15 +147,20 @@ exports.shopRecord = async function (req, res) {
  */
 exports.findByOid = async function (req, res) {
     const oid = req.params.oid || ''
+    let regex = new RegExp(/^[CR]K\d{17}$/)
     if (!oid) {
         writeJson(res, 0, '数据为空')
+    } else if (regex.test(oid)) {
+        try {
+            const result = await inputController.findByOid(oid)
+            writeJson(res, 1, '', result)
+        } catch (err) {
+            writeJson(res, 0, err)
+        }
+    } else {
+        writeJson(res, 0, '订单格式错误')
     }
-    try {
-        const result = await inputController.findByOid(oid)
-        writeJson(res, 1, '', result)
-    } catch (err) {
-        writeJson(res, 0, err)
-    }
+
 }
 /**
  * 商品列表
@@ -357,3 +358,4 @@ function findordernums(sql, val) {
 }
 
 //检索时间 SELECT b.oid,b.expectednum,b.actualnum,b.unit,b.price,b.prices,a.time FROM output AS b,orders AS a WHERE a.oid=b.oid and b.sname="电视机" and b.size="海信T60" and time>'2017-12-28 10:32:19' ORDER BY time DESC
+

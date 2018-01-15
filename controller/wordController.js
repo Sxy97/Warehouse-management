@@ -15,13 +15,13 @@ var path = require('path');
  */
 exports.exportWord = async function (req, res) {
     const oid = req.params.oid || ''
-    if(!oid){
+    if (!oid) {
         writeJson(res, 0, '订单号不能为空')
-    }else {
+    } else {
         try {
-            const table = await
-            inputController.findByOid(oid)
-            if (table.length > 0) {
+            const table = await inputController.findByOid(oid)
+            let regex = new RegExp(/^[CR]K\d{17}$/)
+            if (table.length > 0 && regex.test(oid)) {
                 if (oid.substr(0, 2) == "RK") {
                     if (table[0].com_cat == 1) {
                         table[0].com_cat = "上级调拨"
@@ -53,14 +53,14 @@ exports.exportWord = async function (req, res) {
                 doc.render()
                 var buf = doc.getZip()
                     .generate({type: 'nodebuffer'});
-
+                //encodeURI() 可设置中文名
                 res.writeHead(200, {
                     "Content-Type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
                     'Content-disposition': 'attachment; filename=' + oid + '.docx'
                 });
                 res.end(buf)
             } else {
-                writeJson(res, 0, '没有该订单')
+                writeJson(res, 0, '没有该订单或订单编号格式错误')
             }
         } catch (err) {
             console.log("err:" + err)

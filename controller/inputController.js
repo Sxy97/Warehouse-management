@@ -61,7 +61,7 @@ exports.add = function (req, res) {
                     if (data) {
                         writeJson(res, 1, '', '生成订单成功')
                     } else {
-                        writeJson(res, 0, '生成订单失败，请检查填写数据')
+                        writeJson(res, 0, '生成订单失败请检查数据，重新提交')
                     }
                 })
             })
