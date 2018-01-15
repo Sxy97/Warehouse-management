@@ -97,7 +97,7 @@ exports.updatestate = function (req, res) {
     const state = query.state || ''
     if (!uid || !state) {
         writeJson(res, 0, "数据不能为空")
-    } else if (!(state == 0 || state == 1)) {
+    } else if (!(state == 1 || state == 2)) {
         writeJson(res, 0, "权限类型输入错误")
     } else {
         db.query('update user set state=? where uid=?', [state, uid],
@@ -120,6 +120,7 @@ exports.updatestate = function (req, res) {
  */
 exports.delete = function (req, res) {
     const uids = req.body.uids || ''
+   // const uids=[11,12,13,14,15]
     if (!uids) {
         writeJson(res, 0, "数据不能为空")
     } else {
@@ -128,7 +129,6 @@ exports.delete = function (req, res) {
                 if (err) {
                     writeJson(res, 0, err)
                 } else {
-                    console.log(result.affectedRows)
                     if (result.affectedRows > 0) {
                         writeJson(res, 1, '', '删除成功')
                     } else {

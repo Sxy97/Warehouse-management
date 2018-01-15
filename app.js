@@ -30,9 +30,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //登录拦截器
-app.use(function(req,res,next){
-    interceptor.interceptor(req,res,next)
-})
+// app.use(function(req,res,next){
+//     interceptor.interceptor(req,res,next)
+// })
 
 app.use('/', index);
 

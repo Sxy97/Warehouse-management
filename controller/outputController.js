@@ -16,7 +16,13 @@ exports.fuzzyFindSname = function (req, res) {
                 if (err) {
                     writeJson(res, 0, err)
                 } else {
-                    writeJson(res, 1, '', result)
+                    const val=[]
+                    for (let i = 0; i < result.length; i++) {
+                        for (let [key, values] of Object.entries(result[i])) {
+                            val.push(values)
+                        }
+                    }
+                    writeJson(res, 1, '', val)
                 }
             })
     }
@@ -34,7 +40,13 @@ exports.findSize = function (req, res) {
                 if (err) {
                     writeJson(res, 0, err)
                 } else {
-                    writeJson(res, 1, '', result)
+                    const val=[]
+                    for (let i = 0; i < result.length; i++) {
+                        for (let [key, values] of Object.entries(result[i])) {
+                            val.push(values)
+                        }
+                    }
+                    writeJson(res, 1, '', val)
                 }
             })
 

@@ -35,6 +35,7 @@ exports.add = function (req, res) {
     //         }
     //     ]
     // }
+
     const query = request.body
     const com_cat = parseInt(query.com_cat) || ''
     const onepeople = query.onepeople || ''

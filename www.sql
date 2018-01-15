@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- 主机:                           192.168.1.5
--- 服务器版本:                        5.5.49-log - Source distribution
--- 服务器操作系统:                      Linux
+-- 主机:                           192.168.1.200
+-- 服务器版本:                        10.1.19-MariaDB - mariadb.org binary distribution
+-- 服务器操作系统:                      Win32
 -- HeidiSQL 版本:                  9.4.0.5125
 -- --------------------------------------------------------
 
@@ -29,36 +29,41 @@ CREATE TABLE IF NOT EXISTS `input` (
   PRIMARY KEY (`sid`),
   KEY `sname` (`sname`),
   KEY `oid` (`oid`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='入库表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='入库表';
 
--- 正在导出表  outofstorage.input 的数据：~3 rows (大约)
+-- 正在导出表  outofstorage.input 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `input` DISABLE KEYS */;
 INSERT INTO `input` (`sid`, `sname`, `size`, `unit`, `price`, `num`, `prices`, `oid`) VALUES
-	(37, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK97820171228103115'),
-	(39, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK49620171228103133'),
-	(40, '中性笔', '齐心', '支', 1.50, 100, 150.00, 'RK49620171228103133');
+	(1, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK84481515984421403'),
+	(2, '中性笔', '齐心', '支', 1.50, 100, 150.00, 'RK84481515984421403'),
+	(3, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK88411515984423666'),
+	(4, '中性笔', '齐心', '支', 1.50, 100, 150.00, 'RK88411515984423666'),
+	(5, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK63971515984425819'),
+	(6, '中性笔', '齐心', '支', 1.50, 100, 150.00, 'RK63971515984425819');
 /*!40000 ALTER TABLE `input` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.orders 结构
 CREATE TABLE IF NOT EXISTS `orders` (
-  `oid` char(50) NOT NULL COMMENT '订单编号',
+  `oid` char(19) NOT NULL COMMENT '订单编号',
   `com_cat` char(50) NOT NULL COMMENT '收料单位/物品类别（出库时收料单位）/',
   `onepeople` char(50) NOT NULL COMMENT '经办人',
   `twopeople` char(50) NOT NULL COMMENT '收料人/保管员',
   `threepeople` char(50) NOT NULL COMMENT '负责人',
   `time` datetime NOT NULL COMMENT '时间',
   `type` char(50) NOT NULL COMMENT '0出库/1入库',
-  PRIMARY KEY (`oid`)
+  PRIMARY KEY (`oid`),
+  KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
--- 正在导出表  outofstorage.orders 的数据：~5 rows (大约)
+-- 正在导出表  outofstorage.orders 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`, `time`, `type`) VALUES
-	('CK44320171228103219', '炊事班', 'onepeople', 'twopeople', 'admin', '2017-12-28 10:32:19', '0'),
-	('CK86620171228103200', '炊事班', 'onepeople', 'twopeople', 'admin', '2017-12-28 10:32:00', '0'),
-	('CK86620171228103201', '炊事班', '小李', '小王', '小张', '2018-01-01 10:32:19', '0'),
-	('RK49620171228103133', '1', 'onepeople', 'twopeople', 'admin', '2017-12-28 10:31:33', '1'),
-	('RK97820171228103115', '1', 'onepeople', 'twopeople', 'admin', '2017-12-28 10:31:15', '1');
+	('CK11271515984449636', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:29', '0'),
+	('CK67741515984447676', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:27', '0'),
+	('CK90341515984445132', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:25', '0'),
+	('RK63971515984425819', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:05', '1'),
+	('RK84481515984421403', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:01', '1'),
+	('RK88411515984423666', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:03', '1');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.output 结构
@@ -75,16 +80,17 @@ CREATE TABLE IF NOT EXISTS `output` (
   PRIMARY KEY (`sid`),
   KEY `sname` (`sname`),
   KEY `oid` (`oid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='出库表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='出库表';
 
--- 正在导出表  outofstorage.output 的数据：~5 rows (大约)
+-- 正在导出表  outofstorage.output 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `output` DISABLE KEYS */;
 INSERT INTO `output` (`sid`, `sname`, `size`, `unit`, `price`, `expectednum`, `actualnum`, `prices`, `oid`) VALUES
-	(22, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK86620171228103200'),
-	(23, '中性笔', '齐心', '支', 1.50, 50, 25, 75.00, 'CK86620171228103200'),
-	(24, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK44320171228103219'),
-	(25, '中性笔', '齐心', '支', 1.50, 50, 50, 75.00, 'CK44320171228103219'),
-	(26, '电视机', '海信T60', '台', 6000.00, 2, 0, 0.00, 'CK86620171228103201');
+	(1, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK90341515984445132'),
+	(2, '中性笔', '齐心', '支', 1.50, 50, 50, 75.00, 'CK90341515984445132'),
+	(3, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK67741515984447676'),
+	(4, '中性笔', '齐心', '支', 1.50, 50, 50, 75.00, 'CK67741515984447676'),
+	(5, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK11271515984449636'),
+	(6, '中性笔', '齐心', '支', 1.50, 50, 50, 75.00, 'CK11271515984449636');
 /*!40000 ALTER TABLE `output` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.user 结构
@@ -96,17 +102,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `state` char(50) NOT NULL COMMENT '权限(0为普通/1为超级管理员)',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `loginname` (`loginname`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
--- 正在导出表  outofstorage.user 的数据：~6 rows (大约)
+-- 正在导出表  outofstorage.user 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`uid`, `loginname`, `username`, `password`, `state`) VALUES
-	(1, 'admin', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '2'),
-	(11, '123456', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '1'),
-	(12, '123458', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '1'),
-	(13, '123459', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '1'),
-	(14, '123451', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '2'),
-	(15, '123455', 'admin', 'c4096e4bbc70fdaac457d9ee9cc93e98', '1');
+	(1, 'admin', 'admin', 'e5b8545c27e2fdb9b2032c724b0d2a83', '2'),
+	(17, 'sxy', 'sxy', 'c4096e4bbc70fdaac457d9ee9cc93e98', '1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

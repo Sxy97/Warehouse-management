@@ -40,7 +40,7 @@ async function makeOrderId(type, callback) {
 }
 function findOid(date){
     return new Promise(function(resolve,reject){
-        db.query('select count(1) as num from test where oid =?',[date],function(err,num){
+        db.query('select count(1) as num from orders where oid =?',[date],function(err,num){
             if(err){
                 console.log(err)
                 reject(true)
