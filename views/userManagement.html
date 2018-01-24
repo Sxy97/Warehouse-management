@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+<div id="main">
+<!--头部区域  -->
+<div class="header">
+    <div class="text">
+        <img src="./img/组5.png" alt="">
+    </div>
+    <a href="/personal" class="home">
+        <img src="./img/个人中心.png" alt="">
+        <span>个人中心</span>
+    </a>
+    <a class="tuichu" href="/outlogin">
+        <img src="img/退出登录换.png"/>
+        <span>退出登录</span>
+    </a>
+    <div class="h-line"></div>
+</div>
+<!-- 主体内容 -->
+<div class="content">
+    <!--左侧-->
+    <div class="left_div">
+        <li class="left">
+            <a href="/stockOut" id="Stock-Out">出库管理</a>
+            <img id="Stock-Out" src="./img/出库.png" alt="">
+        </li>
+        <li class="left">
+            <a href="/stockIn">入库管理</a>
+            <img src="./img/入库.png" alt="">
+        </li>
+        <li class="left">
+            <a href="/retrievalQuery" id="retrievalQuery">检索查询</a>
+            <img id="retrievalQuery" src="./img/检索.png" alt="">
+        </li>
+        <li class="left" style="background:rgb(18,74,121);" v-if="cookie==2" style="display: none" v-cloak>
+            <a href="/userManagement" id="userManagement" >用户管理</a>
+            <img id="yhgl_im" src="./img/用户管理拷贝.png" alt="">
+        </li>
+    </div>
+</div>
+<!--右侧-->
+<div class="right_div" id="rightDiv">
+    <!--搜索-->
+    <div class="userMangament">
+        <a id="user1" style="font-size: 18px;display:inline-block;margin-left: 20px;margin-top: 20px;">用户管理</a>
+        <input type="text" class="keyword_search" v-model="test" placeholder="输入关键词进行搜索" @keyup.13="find($event)"/>
+    </div>
+
+    <div class="userlist" id="userlist" style="display: block">
+        <!--操作-->
+        <div class="handle">
+            <a class="userlist1"
+               style="font-size: 12px;color: #999999;position: absolute;left: 28px;top: 14px;">用户列表</a>
+            <button style="background: #0176d6;color: #fff;font-size: 15px;" class="btn-default" id="btn-add"
+                    v-on:click="addxianshi=true">新增
+            </button>
+            <button style="background: #0176d6;color: #fff;font-size: 15px;" class="btn-default" id="btn-del"
+                    v-on:click="deleteUser()">删除
+            </button>
+        </div>
+        <!--属性列表-->
+        <div class="table-aa" style="overflow: auto;margin-left: 28px;margin-right: 20px;">
+            <table class="table table-bordered table-hover"
+                   style="min-width: 1024px;border: 1px solid #DDDDDD;border-collapse:collapse;">
+                <thead>
+                <tr style="background: #1458a7;color: #fff;height: 30px;">
+                    <th style="font-size: 15px;"><input type="checkbox" v-model="checkedAll" class="checkbox-user"
+                                                        v-on:click="all()"></th>
+                    <th style="font-size: 15px;">序号</th>
+                    <th style="font-size: 15px;">登录账号</th>
+                    <th style="font-size: 15px;">用户名</th>
+                    <th style="font-size: 15px;">权限</th>
+                    <!--<th style="font-size: 15px;">性别</th>-->
+                    <!--<th style="font-size: 15px;">账户名称</th>-->
+                    <!--<th style="font-size: 15px;">账户密码</th>-->
+                    <!--<th style="font-size: 15px;">联系电话</th>-->
+                    <th style="font-size: 15px;">操作</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <tr v-for="(item,index) in goodslist">
+                    <td><input type="checkbox" :value="item.uid" class="checkbox-user" v-model="checkeduids"></td>
+                    <td>{{index+1}}</td>
+                    <td>{{item.loginname}}</td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.state}}</td>
+                    <td><input type="button" value="编辑" class="xq-btn" id="xq-bj"
+                               v-on:click="bianji(item.uid,item.loginname,item.username,item.state)"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--分页显示-->
+        <div style="float:right;padding:10px 0; margin-right: 30px;" id="div1" v-show="feyexianshi">
+            <p>
+                <button v-on:click="first()" class="btn btn-primary btn-sm" id="sy">第一页</button>
+                <button v-on:click="on()" class="btn btn-primary btn-sm" id="syy">上一页</button>
+                <button v-on:click="down()" class="btn btn-primary btn-sm" id="xyy">下一页</button>
+                <button v-on:click="last()" class="btn btn-primary btn-sm" id="my">最后一页</button>
+                共<span style="text-align: center;width:45px;display: inline-block;" id="tiaoshu">{{num}}</span>
+                </select>条,
+                第<span style="text-align: center;width:74px;display: inline-block;"
+                       id="pageNum">{{page}}/{{pages}}</span>页
+                <!--<input style="width: 50px;" id="ty" value=""/>-->
+                <!--<button onclick="selectByPage()" id="tz" class="btn btn-primary btn-sm">确定</button>-->
+            </p>
+        </div>
+    </div>
+
+    <!--新增弹窗-->
+    <div class="dialog-background" id="addCameraAttr" style="display:none;" style="display:none;" v-show="addxianshi"
+         v-cloak>
+        <div class="dialog-container1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" v-on:click="closeAdd()"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" style="text-align: center;">新增用户</h4>
+            </div>
+            <div class="modal-body">
+                <table border="0" width="95%" height="300px">
+                    <tr>
+                        <!--<td>角色名称：</td>-->
+                        <!--<td>-->
+                        <!--<input type="text" class="form-control">-->
+                        <!--</td>-->
+                        <td>用户名：</td>
+                        <td>
+                            <input type="text" class="form-control" v-model="user.username">
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--<td>性别：</td>-->
+                        <!--<td>-->
+                        <!--<label><input type="radio" value="boy" name="user-sex">男</label>-->
+                        <!--<label><input type="radio" value="girl" name="user-sex">女</label>-->
+                        <!--</td>-->
+                        <td>登录账号：</td>
+                        <td>
+                            <input type="text" v-model="user.loginname" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>账户密码：</td>
+                        <td>
+                            <input type="password" v-model="user.password" class="form-control"/>
+                        </td>
+                        <!--<td>电子邮箱：</td>-->
+                        <!--<td>-->
+                        <!--<input type="text" id="attr_desc1" class="form-control"/>-->
+                        <!--</td>-->
+                    </tr>
+                    <tr>
+                        <!--<td>联系电话：</td>-->
+                        <!--<td>-->
+                        <!--<input type="text" id="attr_desc1" class="form-control"/>-->
+                        <!--</td>-->
+                        <td>权限：</td>
+                        <td>
+                            <input type="radio" value="1" v-model="user.state">
+                            <label for="one">普通用户</label>
+                            <input type="radio" value="2" v-model="user.state">
+                            <label for="two">管理员</label>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" v-on:click="closeAdd()">关闭</button>
+                <button type="button" class="btn btn-primary" v-on:click="userSave()">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+    <!--判断弹窗-->
+    <!--编辑弹窗-->
+    <div class="dialog-background" style="display:none;" style="display:none;" v-show="bjxianshi" v-cloak>
+        <div class="dialog-container1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" v-on:click="closebj()"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" style="text-align: center;">编辑用户</h4>
+            </div>
+            <div class="modal-body">
+                <table border="0" width="95%" height="300px">
+                    <tr>
+                        <!--<td>角色名称：</td>-->
+                        <!--<td>-->
+                        <!--<input type="text" class="form-control">-->
+                        <!--</td>-->
+                        <td>用户名：</td>
+                        <td>
+                            <input type="text" disabled="disabled" class="form-control" v-model="user.username">
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--<td>性别：</td>-->
+                        <!--<td>-->
+                        <!--<label><input type="radio" value="boy" name="user-sex">男</label>-->
+                        <!--<label><input type="radio" value="girl" name="user-sex">女</label>-->
+                        <!--</td>-->
+                        <td>登录账号：</td>
+                        <td>
+                            <input type="text" disabled="disabled" v-model="user.loginname" class="form-control"/>
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                    <!--<td>账户密码：</td>-->
+                    <!--<td>-->
+                    <!--<input type="password" v-model="user.password" class="form-control"/>-->
+                    <!--</td>-->
+                    <!--&lt;!&ndash;<td>电子邮箱：</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="text" id="attr_desc1" class="form-control"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                    <!--</tr>-->
+                    <tr>
+                        <!--<td>联系电话：</td>-->
+                        <!--<td>-->
+                        <!--<input type="text" id="attr_desc1" class="form-control"/>-->
+                        <!--</td>-->
+                        <td>权限：</td>
+                        <td>
+                            <input type="radio" value="1" v-model="user.state">
+                            <label for="one">普通用户</label>
+                            <input type="radio" value="2" v-model="user.state">
+                            <label for="two">管理员</label>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" v-on:click="closebj()">关闭</button>
+                <button type="button" class="btn btn-primary" v-on:click="bianjiSave()">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+    <!--判断弹窗-->
+</div>
+</div>
+
+<script type="text/javascript">
+    var user = new Vue({
+        el: "#main",
+        data: {
+            cookie:document.cookie.split('=')[1],
+            url: "",
+            bjxianshi: false,
+            feyexianshi:true,
+            addxianshi: false,
+            pages: 1,
+            num: 0,
+            page: 1,
+            test: '',
+            goodslist: [],
+            goods: [],
+            checkedAll: false,
+            checkeduids: [],
+            user: {
+                uid: '',
+                loginname: '',
+                username: '',
+                state: 1,
+                password: ''
+            }
+        },
+        mounted: function () {
+            this.do()
+        },
+        methods: {
+            do: function () {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/user/list",
+                    data: {
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                user.feyexianshi=true
+                                user.checkedAll=false
+                                user.checkeduids=[]
+                                user.num = data.data.num
+                                user.page = data.data.current_page
+                                user.pages = data.data.pages
+                                user.goodslist = data.data.result
+                            } else {
+                                console.log("列表为空")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            first: function () {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/user/list",
+                    data: {
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                user.num = data.data.num
+                                user.page = data.data.current_page
+                                user.pages = data.data.pages
+                                user.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            on: function () {
+                if (this.page - 1 > 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: this.url + "/user/list",
+                        data: {
+                            page: this.page - 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    user.num = data.data.num
+                                    user.page = data.data.current_page
+                                    user.pages = data.data.pages
+                                    user.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                } else {
+                    alert("已经是第一页了")
+                }
+            },
+            down: function () {
+                if (this.page + 1 <= this.pages) {
+                    $.ajax({
+                        type: "GET",
+                        url: this.url + "/user/list",
+                        data: {
+                            page: this.page + 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    user.num = data.data.num
+                                    user.page = data.data.current_page
+                                    user.pages = data.data.pages
+                                    user.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                } else {
+                    alert("已经是最后一页了")
+                }
+            },
+            last: function () {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/user/list",
+                    data: {
+                        page: this.pages
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                user.num = data.data.num
+                                user.page = data.data.current_page
+                                user.pages = data.data.pages
+                                user.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            closeAdd: function () {
+                user.addxianshi = false
+                user.user.password = ''
+                user.user.loginname = ''
+                user.user.username = ''
+                user.user.state = 1
+            },
+            closebj: function () {
+                user.bjxianshi = false
+                user.user.uid = ''
+                user.user.password = ''
+                user.user.loginname = ''
+                user.user.username = ''
+                user.user.state = 1
+            },
+            all: function () {
+                this.checkedAll = !this.checkedAll
+                if (this.checkedAll) {
+                    for (var i = 0; i < user.goodslist.length; i++) {
+                        user.checkeduids.push(user.goodslist[i].uid)
+                    }
+                } else {
+                    this.checkeduids = []
+                }
+            },
+            deleteUser: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/user/delete",
+                    data: {
+                        uid: this.checkeduids
+                    },
+                    traditional: true,//这里设置为true
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            user.do()
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            userSave: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/user/add",
+                    data: {
+                        username: user.user.username,
+                        loginname: user.user.loginname,
+                        state: user.user.state,
+                        password: user.user.password
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            user.addxianshi = false
+                            user.user.password = ''
+                            user.user.loginname = ''
+                            user.user.username = ''
+                            user.user.state = 1
+                            user.do()
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            bianji: function (uid, loginname, username, state) {
+                user.bjxianshi = true
+                user.user.uid = uid
+                user.user.loginname = loginname
+                user.user.username = username
+                if (state == "管理员") {
+                    user.user.state = 2
+                } else {
+                    user.user.state = 1
+                }
+            },
+            bianjiSave: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/user/updatestate",
+                    data: {
+                        uid: user.user.uid,
+                        state: user.user.state,
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            user.bjxianshi = false
+                            user.user.uid = ''
+                            user.user.password = ''
+                            user.user.loginname = ''
+                            user.user.username = ''
+                            user.user.state = 1
+                            user.do()
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            find: function (ev) {
+                if (ev.keyCode == 13) {
+                    $.ajax({
+                        type: "POST",
+                        url: this.url + "/user/find",
+                        data: {
+                            test: user.test
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                user.test=''
+                                user.feyexianshi=false
+                                user.goodslist = data.data
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -8,9 +8,28 @@ var wordController=require('../controller/wordController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('login')
 });
-
+//跳转出库管理
+router.get('/stockOut', function(req, res, next) {
+    res.render('stockOut')
+});
+//跳转入库管理
+router.get('/stockIn',function(req, res, next){
+    res.render('stockIn')
+})
+//跳转检索查询
+router.get('/retrievalQuery',function(req, res, next){
+    res.render('retrievalQuery')
+})
+//跳转用户管理
+router.get('/userManagement',function(req, res, next){
+    res.render('userManagement')
+})
+//跳转个人中心
+router.get('/personal',function(req, res, next){
+    res.render('personal')
+})
 /**
  * 用户模块
  */
@@ -22,6 +41,8 @@ router.post('/user/delete',userController.delete)
 router.post('/user/updatePassword',userController.updatePassword)
 router.get('/user/list',userController.list)
 router.get('/user/findone/:uid',userController.findonebyId)
+//TODO 模糊查询用户名 登录账号
+router.post('/user/find',userController.find)
 /**
  * 入库管理
  */

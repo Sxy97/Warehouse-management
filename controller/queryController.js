@@ -20,8 +20,8 @@ exports.output = async function (req, res) {
     const com_cat = query.com_cat || '' //收料单位
     const type = 0;
     try {
-        var page = Number(req.query.page) || 1;//当前页数
-        var limt = Number(req.query.limt) || config.limt //每页显示条数
+        var page = Number(query.page) || 1;//当前页数
+        var limt = Number(query.limt) || config.limt //每页显示条数
         limt = limt > 0 ? limt : config.limt
         page = page > 0 ? page : 1;
         const data = await sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, closetime, type, page, limt)
@@ -46,11 +46,11 @@ exports.input = async function (req, res) {
     const oid = query.oid || '';//订单编号
     const startime = query.startime || ''//起始时间
     const closetime = query.closetime || '' //终止时间
-    const com_cat = query.com_cat || '' //物品类别
+    const com_cat = Number(query.com_cat) || '' //物品类别
     const type = 1;
     try {
-        var page = Number(req.query.page) || 1;//当前页数
-        var limt = Number(req.query.limt) || config.limt //每页显示条数
+        var page = Number(query.page) || 1;//当前页数
+        var limt = Number(query.limt) || config.limt //每页显示条数
         limt = limt > 0 ? limt : config.limt
         page = page > 0 ? page : 1;
         const data = await sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, closetime, type, page, limt)
@@ -121,18 +121,24 @@ exports.shopRecord = async function (req, res) {
         try {
             const data = {}
             let num = await outputController.findKuCun(sname, size)
+            data.sname=sname
+            data.size=size
             data.kucun = num
             let out = await outShopRecord(sname, size)
             for (let i = 0; i < out.length; i++) {
+                out[i].type="出库单"
+                out[i].num=-out[i].num
                 out[i].time = sd.format(new Date(out[i].time), 'YYYY-MM-DD hh:mm:ss')
             }
-            data.out = out
+            //data.out = out
             let input = await  inShopRecord(sname, size)
             for (let i = 0; i < input.length; i++) {
+                input[i].type='入库单'
                 input[i].time = sd.format(new Date(input[i].time), 'YYYY-MM-DD hh:mm:ss')
             }
-            data.input = input
-            writeJson(res, 1, '', data)
+            //data.input = input
+            data.result=[...input,...out]
+            writeJson(res, 1, '',data)
         } catch (err) {
             writeJson(res, 0, err)
             return
@@ -219,7 +225,7 @@ exports.goodslist = async function (req, res) {
 //查询商品出库信息
 function outShopRecord(sname, size) {
     return new Promise(function (resolve, reject) {
-        db.query('SELECT b.oid,b.expectednum,b.actualnum,b.unit,b.price,b.prices,a.time FROM output AS b,orders AS a WHERE a.oid=b.oid and b.sname=? and b.size=? ORDER BY time DESC',
+        db.query('SELECT b.oid,b.actualnum as num,b.unit,b.price,b.prices,a.time FROM output AS b,orders AS a WHERE a.oid=b.oid and b.sname=? and b.size=? ORDER BY time DESC',
             [sname, size], function (err, result) {
                 if (err) {
                     reject(err)
@@ -233,7 +239,7 @@ function outShopRecord(sname, size) {
 //查询商品入库信息
 function inShopRecord(sname, size) {
     return new Promise(function (resolve, reject) {
-        db.query('SELECT b.oid,b.num,b.unit,b.price,b.prices,a.time FROM input AS b,orders AS a WHERE a.oid=b.oid and b.sname=? and b.size=? ORDER BY time DESC',
+        db.query('SELECT b.oid,b.num as num,b.unit,b.price,b.prices,a.time FROM input AS b,orders AS a WHERE a.oid=b.oid and b.sname=? and b.size=? ORDER BY time DESC',
             [sname, size], function (err, result) {
                 if (err) {
                     reject(err)
@@ -253,8 +259,10 @@ function sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, close
             reject("搜索信息不能为空")
         } else {
             if (type == 1) {
-                if (!(com_cat == 1 || com_cat == 2)) {
-                    reject("物品类别错误")
+                if(com_cat) {
+                    if (!(com_cat == 1 || com_cat == 2)) {
+                        reject("物品类别错误")
+                    }
                 }
             }
             const val = []
@@ -297,7 +305,7 @@ function sousuo(com_cat, onepeople, twopeople, threepeople, oid, startime, close
                     sqlnum = sqlnum + " and time <= '" + closetime + "' and time >= '" + startime + "'"
                 }
             }
-            sql = sql + " limit ?,?"
+            sql = sql + " ORDER BY time DESC limit ?,?"
             val.push(y, limt)
             try {
                 var nums = await findordernums(sqlnum, val)

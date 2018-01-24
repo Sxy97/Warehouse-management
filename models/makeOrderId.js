@@ -23,20 +23,6 @@ async function makeOrderId(type, callback) {
         console.log(err)
         makeOrderId(type,callback)
     }
-
-    // db.query('select * from orders where oid = ?', [date],
-    //     function (err, result) {
-    //         if (err) {
-    //             console.log(err)
-    //         } else {
-    //             if (result.length > 0) {
-    //
-    //                 makeOrderId(type, callback)
-    //             } else {
-    //                 callback(date)
-    //             }
-    //         }
-    //     })
 }
 function findOid(date){
     return new Promise(function(resolve,reject){

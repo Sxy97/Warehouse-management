@@ -1,0 +1,118 @@
+.right_div1{
+	position: absolute;
+	top: 10px;
+	bottom:0px;
+	left: 260px;
+	right: 20px;
+	background:#FFFFFF;
+	overflow: auto;	
+}
+.btnGrop{
+	margin: 20px 30px 0 30px;
+}
+.Stock{
+	display: none;
+	position: relative;
+	height: 150px; 
+	background: #FFFFFF;
+	top:-10px;
+	left: 3px;	
+}
+#handle{
+	/*overflow-x: auto;*/
+	position: absolute;	
+	font-size: 14px;
+	top: 10px;
+	height: 150px;
+	margin-bottom: 10px;
+}
+#handle tr{
+	height: 30px;	
+}
+#handle td{
+	text-align: right;	
+	padding: 0px 5px;	
+	width: 10%;
+	border: 0;
+}
+#handle input{
+	width: 130px;	
+}
+.input-btn{
+	 display:inline-block; 
+	 height:32px; 
+	 background:#098cc8; 
+	 border:1px #33a8df solid; 
+	 border-radius:3px;	  
+	   color:#fff;
+	    padding:0 20px;
+	     cursor:pointer; 
+	     margin:10px 10px;}
+#btn-handle{
+	position: relative;	
+	top: -10px;
+    left: 3px;   
+    width: 100%;
+    border-bottom: 1px solid #EEEEEE;
+    text-align:center;
+    background: #FFFFFF;
+    font-size: 12px;
+    color: #9D9D9D;       
+}
+.laydate-icon{
+	background:url(../img/date.png)no-repeat 106px;
+}
+.StockOutlist3{	
+	display: block;	
+}
+#StockOutlist4{
+	
+}
+.oddicon1{
+	display: inline-block;
+    float: right;
+    font-size: 12px;
+    color: #999;
+   margin-top: -30px;
+    } 
+    .oddicon-in1{
+    	display: inline-block;
+      margin-right:10px;
+    }
+    .oddicon-out1{
+    	display: inline-block;
+    	 margin-right: 30px;
+    }
+    .oddicon-prt1{
+    	display: inline-block;
+    	margin-right: 44px;
+    }
+
+     .goodsM5{
+    position: relative;
+    text-align: center;
+	height: 50px;
+	line-height: 50px; 
+	background: #FFFFFF;	
+	left: 3px; 
+	border-bottom: 1px solid #EEEEEE;   	
+    }
+     .goodsM5 a{
+     	text-decoration: none;
+     	color: #000000;     
+     }
+     .goodsM5 b{
+     	margin-right: 50px;
+     }
+     .rank{
+     	display:inline-block;
+        float: left;
+        margin-left: 40px;    	
+     }
+   .zi{  
+   	display: inline-block;
+   	cursor:pointer;
+   	color: currentcolor;
+   	margin-left: 5px;
+   }    
+   

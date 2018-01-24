@@ -38,11 +38,7 @@ exports.login = function (req, res) {
  */
 exports.outlogin = function (req, res) {
     req.session.destroy(function (err) {
-        if (err) {
-            writeJson(res, 0, "退出失败")
-        } else {
-            writeJson(res, 1, "", "退出成功")
-        }
+        res.render('login')
     })
 }
 /**
@@ -81,7 +77,8 @@ exports.add = function (req, res) {
                         }
                     })
             } else {
-                writeJson(res, 0, "账号重复")
+                console.log(`err:${err}`)
+                writeJson(res, 0, err)
             }
         })
     }
@@ -119,9 +116,8 @@ exports.updatestate = function (req, res) {
  * @param uids 删除uid数组
  */
 exports.delete = function (req, res) {
-    const uids = req.body.uids || ''
-   // const uids=[11,12,13,14,15]
-    if (!uids) {
+    const uids = req.body.uid || ''
+    if (!uids || uids.length<=0) {
         writeJson(res, 0, "数据不能为空")
     } else {
         db.query('delete from user where uid in (?)', [uids],
@@ -145,7 +141,6 @@ exports.delete = function (req, res) {
  */
 exports.updatePassword = function (req, res) {
     const uid = req.session.user.uid
-    //const uid = 11
     const oldpassword = req.body.oldpassword || ''
     const newPassword = req.body.newpassword || ''
     if (!uid || !oldpassword || !newPassword) {
@@ -206,6 +201,14 @@ exports.list = function (req, res) {
                         if (err) {
                             writeJson(res, 0, err)
                         } else {
+                            for(let i=0;i<result.length;i++){
+                                if(result[i].state == 1){
+                                    result[i].state="普通用户"
+                                }
+                                if(result[i].state == 2){
+                                    result[i].state="管理员"
+                                }
+                            }
                             writeJson(res, 1, '', {
                                 num: num[0].num,//总条数
                                 current_page: page,//当前页数
@@ -236,6 +239,36 @@ exports.findonebyId = function (req, res) {
         })
     }
 }
+//根据登录名或用户模糊搜索
+exports.find=function(req,res){
+    const query=req.body
+    const test=query.test || ''
+    if(test){
+        const sql =`select * from user where username like '%${test}%' or loginname like'%${test}%'`
+        db.query(sql,[],function(err,result){
+            if(err){
+                console.log(err)
+                writeJson(res, 0, err)
+            }else{
+                if(result.length>0){
+                    for(let i=0;i<result.length;i++){
+                        if(result[i].state == 1){
+                            result[i].state="普通用户"
+                        }
+                        if(result[i].state == 2){
+                            result[i].state="管理员"
+                        }
+                    }
+                    writeJson(res, 1, '', result)
+                }else{
+                    writeJson(res, 0, "没有该信息")
+                }
+            }
+        })
+    }else{
+        writeJson(res, 0, '搜索条件不能为空')
+    }
+}
 
 
 function findById(uid, callback) {
@@ -255,10 +288,10 @@ function findByLoginName(loginName, callback) {
         function (err, result) {
             if (err) {
                 console.log(err)
-                callback(err, '')
+                callback(err, false)
             } else {
                 if (result.length > 0) {
-                    callback('', false)
+                    callback('账号重复', false)
                 } else {
                     callback('', true)
                 }

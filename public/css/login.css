@@ -1,0 +1,230 @@
+/*body{height: 100%;width: 100%;margin:0;padding:0;}  
+body{  
+	background: url(../img/切图0117/背景.png) no-repeat;
+     width:100%;  
+    height:100%;
+    overflow: hidden;  
+    background-size: 100% 100%;
+    color: #FFFFFF;
+   }  
+body a{
+	text-decoration: none;
+	color: #FFFFFF;
+	padding-right: 80px;
+	margin-left: 75px;
+}
+.login-content{	
+	margin:0 auto ;
+	width:820px;
+	height:810px;
+}
+.login-content h1{
+	margin-top: 80px;	
+	margin-bottom: 30px;	
+	text-align: center;	
+}
+.login-design{
+	text-align: center;
+	height:630px;
+	width: 820px;
+	background: url(../img/切图0117/组4.png) no-repeat center top;
+}
+.username{
+		color: #FFFFFF;
+	font-size: 20px;
+	width: 290px;
+	height: 38px;
+	margin-top: 135px;
+	margin-bottom: 18px;
+	padding-left:40px;
+	border: 0;
+	background:url(../img/切图0117/用户名.png) no-repeat center ;
+}
+.userpwd{
+	background: url(../img/切图0117/密码.png) no-repeat center;
+	color: #FFFFFF;
+	font-size: 20px;
+	width: 290px;
+	height: 38px;	
+	margin-bottom: 15px;
+	padding-left:40px;
+	border: 0;	
+}
+.login-img{
+		background: url(../img/切图0117/登录.png) no-repeat;
+	display: inline-block;		
+	color: rgb(58,109,159);
+	border: 0;
+	border-radius: 3px;
+	font-size: 20px;
+	width:330px;
+	height: 43px;
+	line-height: 47px;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+.login-img:hover{
+	background: #E2E2E2;
+}
+.checked-pwd{
+	width: 15px;
+	height: 10px;
+	background: url(../img/切图0117/矩形8.png) no-repeat;
+}*/
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+}
+body{
+    background: url(../img/切图0117/背景.png) no-repeat;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+.titlename{
+	position: relative;
+    top: -20%;
+    width: 100%;
+    height: 10%;    
+    text-align: center;  
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: bold;  
+}
+.login{
+    position: relative;
+    top: 30%;
+    width: 34%;
+    height: 50%;
+    left: 33%;
+    text-align: center;
+    background: url(../img/切图0117/组4.png) no-repeat;
+    background-size: 100% 100%;
+}
+.login .box input{
+    display: inline;
+    width: 17px;
+    height: 17px;
+    background: #f9f9f9 ;
+    color: #1458a7;
+    font-size: 14px;
+    text-indent: 10px;
+}
+.login input:focus{
+    outline: none;
+    background: rgba(250, 250, 250, .7);
+    color: #fff;
+}
+.login span{
+    font-size: 14px;
+    display: inline-block;
+    left: 35px;
+    color: #1458a7;
+}
+.login span:focus{
+    color: #4e8af2;
+}
+.password-img{
+    width: 14px;
+    height: 16px;
+}
+.password-img img{
+    width: 14px;
+    height: 16px;
+    position: relative;
+    left: 35px;
+    top: 0;
+}
+.login p{
+    display: inline-block;
+    margin: 50px 10px 36px 35px;
+    font-size: 16px;
+    color: #1458a7;
+}
+.username{
+	position: absolute;
+    margin: 15% 0 0 25%;
+    width: 55%;
+    background: url(../img/登录-user.png) no-repeat 13px center;
+    border-radius: 5px;
+    border: 1px solid #6393c8;
+    text-align: right;
+    height: 40px;
+}
+.username input{
+	width: 86%;
+	height: 100%;
+	background: none;
+	border-left: 1px solid #6393c8;
+	border-bottom: none;
+	border-right: none;
+	border-top: none;
+	border-radius: 5px;
+	color: #fff;
+	padding-left: 10px;
+}
+.password{
+	position: absolute;
+    margin: 25% 0 0 25%;
+    width: 55%;
+    height: 40px;
+    background: url(../img/登录-pwd.png) no-repeat 13px center;
+    border-radius: 5px;
+    border: 1px solid #6393c8;
+    text-align: right;
+}
+.password input{
+	width: 86%;
+	height: 100%;
+	background: none;
+	border-left: 1px solid #6393c8;
+	border-bottom: none;
+	border-right: none;
+	border-top: none;
+	border-radius: 5px;
+	color: #fff;
+	padding-left: 10px;
+}
+input::-webkit-input-placeholder{
+    color: #fff;
+}
+.box{
+    margin-left: -18%;
+    margin-top: 21px;
+}
+.btn{
+    width: 10%;
+    height: 40px;
+    margin:25px 36px 40px 42px;
+}
+@media screen and (min-width: 992px) and  (max-width: 1366px){
+    .login .box{
+        margin-left: -18%;
+        margin-top: 15px;
+    }
+    .login .btn{
+        margin:6px 24px 0 27px;
+    }
+}
+.btn-register,.btn-login{
+    background: #1458a7;
+    color: #fff;
+}
+
+.btn-login:active, .btn-register:active{
+    outline: none;
+    background: #fff;
+    color: #1458a7;
+}
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    color: rgba(255,255,255,.4);
+}
+

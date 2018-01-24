@@ -35,13 +35,12 @@ exports.add = function (req, res) {
     //         }
     //     ]
     // }
-
-    const query = request.body
+    const query = req.body
     const com_cat = parseInt(query.com_cat) || ''
     const onepeople = query.onepeople || ''
     const twopeople = query.twopeople || ''
     const time = new Date()
-    const datas = query.datas || ''
+    const datas =JSON.parse(query.datas)|| ''
     if (!com_cat || !onepeople || !twopeople || datas.length <= 0) {
         writeJson(res, 0, "数据不能为空")
     } else if (!(com_cat == 1 || com_cat == 2)) {
@@ -90,31 +89,44 @@ exports.list = async function (req, res) {
                     } else {
                         if (result.length > 0) {
                             for (let i = 0; i < result.length; i++) {
-                                db.query('select sid,sname,size,unit,price,num,prices from input where oid =?', [result[i].oid],
-                                    function (err, data) {
-                                        if (err) {
-                                            console.log(err)
-                                            throw (err)
-                                        } else {
-                                            if(result[i].com_cat == 1){
-                                                result[i].com_cat="上级调拨"
-                                            }
-                                            if(result[i].com_cat == 2){
-                                                result[i].com_cat="本级自筹"
-                                            }
-                                            result[i].time=sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
-                                            result[i].datas = data
-                                        }
-                                        if (i == result.length - 1) {
-                                            writeJson(res, 1, '', {
-                                                num:nums,//总条数
-                                                current_page:page,//当前页数
-                                                pages:Math.ceil(nums / limt),//总页数
-                                                result:result//数据
-                                            })
-                                        }
-                                    })
+                                if(result[i].com_cat == 1){
+                                    result[i].com_cat="上级调拨"
+                                }
+                                if(result[i].com_cat == 2){
+                                    result[i].com_cat="本级自筹"
+                                }
+                                result[i].time=sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
+                                // db.query('select sid,sname,size,unit,price,num,prices from input where oid =?', [result[i].oid],
+                                //     function (err, data) {
+                                //         if (err) {
+                                //             console.log(err)
+                                //             throw (err)
+                                //         } else {
+                                //             if(result[i].com_cat == 1){
+                                //                 result[i].com_cat="上级调拨"
+                                //             }
+                                //             if(result[i].com_cat == 2){
+                                //                 result[i].com_cat="本级自筹"
+                                //             }
+                                //             result[i].time=sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
+                                //             result[i].datas = data
+                                //         }
+                                //         if (i == result.length - 1) {
+                                //             writeJson(res, 1, '', {
+                                //                 num:nums,//总条数
+                                //                 current_page:page,//当前页数
+                                //                 pages:Math.ceil(nums / limt),//总页数
+                                //                 result:result//数据
+                                //             })
+                                //         }
+                                //     })
                             }
+                            writeJson(res, 1, '', {
+                                num:nums,//总条数
+                                current_page:page,//当前页数
+                                pages:Math.ceil(nums / limt),//总页数
+                                result:result//数据
+                            })
                         } else {
                             writeJson(res, 1, '', {
                                 num:0,//总条数
@@ -219,7 +231,7 @@ function adds(oid, com_cat, onepeople, twopeople, time, threepeople, type, datas
 function findByOid(oid) {
     return new Promise(function (resolve, reject) {
         if (oid.substr(0, 2) == "RK") {
-            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople from orders where type = 1 and oid =? ORDER BY time DESC', [oid],
+            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople from orders where type = 1 and oid =?', [oid],
                 function (err, result) {
                     if (err) {
                         console.log(err)
@@ -240,7 +252,7 @@ function findByOid(oid) {
                                         reject(err)
                                     } else {
                                         result[0].datas = data
-                                        resolve(result)
+                                        resolve(result[0])
                                     }
                                 })
                         } else {
@@ -264,7 +276,7 @@ function findByOid(oid) {
                                         reject(err)
                                     } else {
                                         result[0].datas = data
-                                        resolve(result)
+                                        resolve(result[0])
                                     }
                                 })
                         } else {

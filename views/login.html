@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <style type="text/css">
+        .box a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<!--登录-->
+<div class="login">
+    <div class="titlename">后台管理系统</div>
+    <div class="username">
+        <input type="text" placeholder="账号" v-model="loginname">
+    </div>
+    <div class="password">
+        <input type="password" placeholder="密码" v-model="password">
+    </div>
+    <img class="btn btn-login" style="width:56%;margin: 38% 0 0 5%;height:40px;padding: 0;" src="img/denglu.png"
+         v-on:click="login()"/>
+    <!--<div style="width: 100%;margin: 1% 0 0 63.3%;overflow: hidden;" class="box">-->
+    <!--<input style="float: left;height: 16px;" id="removePass" type="checkbox"><a-->
+    <!--style="float: left;color: #FFFFFF;margin-left: 10px;">记住密码</a>-->
+    <!--</div>-->
+    <div class="error">{{msg}}</div>
+</div>
+
+<script type="text/javascript">
+    var login = new Vue({
+        el: ".login",
+        data: {
+            url: "",
+            loginname: "",
+            password: "",
+            msg: ''
+        },
+        methods: {
+            login: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/login",
+                    data: {
+                        username: this.loginname,
+                        password: this.password
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            document.cookie="state="+data.data.state;
+                            window.location.href="/stockOut"
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+        }
+    })
+</script>
+</body>
+</html>

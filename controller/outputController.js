@@ -184,25 +184,28 @@ exports.add = async function (req, res) {
     //         }
     //     ]
     // }
-    const query = req.body
+   const query = req.body
     const com_cat = query.com_cat || ''
     const onepeople = query.onepeople || ''
     const twopeople = query.twopeople || ''
     const time = new Date()
-    const datas = query.datas || ''
+    const datas = JSON.parse(query.datas) || ''
+    console.log(datas)
     if (!com_cat || !onepeople || !twopeople || datas.length <= 0) {
         writeJson(res, 0, "数据不能为空")
     } else {
         let jiaoyan = true
         let jiaoyankucun = true
          for (let i = 0; i < datas.length; i++) {
+            delete datas[i].kucun
             if (!datas[i].sname || !datas[i].size || !datas[i].unit || !datas[i].price || !datas[i].expectednum || !datas[i].actualnum || !datas[i].prices) {
                 jiaoyan = false
                 writeJson(res, 0, "商品数据不能为空")
                 return
-            } else if (datas[i].actualnum > datas[i].expectednum) {
+            } else if (datas[i].actualnum - datas[i].expectednum >0) {
+
                 jiaoyan = false
-                writeJson(res, 0, "实发数不能大于通知数")
+                writeJson(res, 0, "商品实发数不能大于通知数")
                 return
             } else {
                 if(jiaoyan){
@@ -261,24 +264,33 @@ exports.list = async function (req, res) {
                     } else {
                         if (result.length > 0) {
                             for (let i = 0; i < result.length; i++) {
-                                db.query('select sid,sname,size,unit,price,expectednum,actualnum,prices from output where oid =?', [result[i].oid],
-                                    function (err, data) {
-                                        if (err) {
-                                            console.log(err)
-                                        } else {
-                                            result[i].time=sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
-                                            result[i].datas = data
-                                        }
-                                        if (i == result.length - 1) {
-                                           writeJson(res, 1, '', {
-                                                num:nums,//总条数
-                                                current_page:page,//当前页数
-                                                pages:Math.ceil(nums / limt),//总页数
-                                                result:result//数据
-                                            })
-                                        }
-                                    })
+                                result[i].time = sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
                             }
+                            writeJson(res, 1, '', {
+                                num:nums,//总条数
+                                current_page:page,//当前页数
+                                pages:Math.ceil(nums / limt),//总页数
+                                result:result//数据
+                            })
+                            // for (let i = 0; i < result.length; i++) {
+                            //     db.query('select sid,sname,size,unit,price,expectednum,actualnum,prices from output where oid =?', [result[i].oid],
+                            //         function (err, data) {
+                            //             if (err) {
+                            //                 console.log(err)
+                            //             } else {
+                            //                 result[i].time=sd.format(new Date(result[i].time), 'YYYY-MM-DD hh:mm:ss')
+                            //                 result[i].datas = data
+                            //             }
+                            //             if (i == result.length - 1) {
+                            //                writeJson(res, 1, '', {
+                            //                     num:nums,//总条数
+                            //                     current_page:page,//当前页数
+                            //                     pages:Math.ceil(nums / limt),//总页数
+                            //                     result:result//数据
+                            //                 })
+                            //             }
+                            //         })
+                            // }
                         } else {
                             writeJson(res, 1, '',  writeJson(res, 1, '', {
                                 num:0,//总条数

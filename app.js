@@ -8,11 +8,22 @@ var session = require('express-session');
 var index = require('./routes/index');
 var interceptor=require('./models/loginInterceptor')
 var app = express();
+var ejs = require('ejs');
+//允许跨域请求
 
+// app.all('/*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     next();
+// });
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+//设置 html模板
+app.engine('.html', ejs.__express);
+app.set('view engine', 'html');
 //设置session
 app.use(session({
     resave:false,
@@ -30,11 +41,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //登录拦截器
+
 app.use(function(req,res,next){
     interceptor.interceptor(req,res,next)
- })
+})
 
 app.use('/', index);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,7 +61,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+console.log(err)
   // render the error page
   res.status(err.status || 500);
   res.render('error');

@@ -13,7 +13,7 @@
     "debug": "~2.6.9",
     "docxtemplater": "^3.2.1",
     "ejs": "~2.5.7",
-    "express": "~4.15.5",
+    "express": "^4.15.5",
     "express-session": "^1.15.6",
     "http": "^0.0.0",
     "jszip": "^2.6.1",

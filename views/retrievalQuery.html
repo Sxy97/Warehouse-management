@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/retrievalQuery.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/retrievalQuery.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#mydate3',//指定元素
+            btns: ['confirm']
+        });
+        laydate.render({
+            elem: '#mydate4',//指定元素
+            btns: ['confirm']
+        });
+        laydate.render({
+            elem: '#mydate5',//指定元素
+            btns: ['confirm']
+        });
+        laydate.render({
+            elem: '#mydate6',//指定元素
+            btns: ['confirm']
+        });
+    </script>
+</head>
+<body>
+<div id="main">
+<!--头部区域  -->
+<div class="header">
+    <div class="text">
+        <img src="./img/组5.png" alt="">
+    </div>
+    <a href="/personal" class="home">
+        <img src="./img/个人中心.png" alt="">
+        <span>个人中心</span>
+    </a>
+    <a class="tuichu" href="/outlogin">
+        <img src="img/退出登录换.png"/>
+        <span>退出登录</span>
+    </a>
+    <div class="h-line"></div>
+</div>
+<!-- 主体内容 -->
+<div class="content">
+    <!--左侧-->
+    <div class="left_div">
+        <li class="left">
+            <a href="/stockOut" id="Stock-Out">出库管理</a>
+            <img id="Stock-Out" src="./img/出库.png" alt="">
+        </li>
+        <li class="left">
+            <a href="/stockIn">入库管理</a>
+            <img src="./img/入库.png" alt="">
+        </li>
+        <li class="left" style="background:rgb(18,74,121);">
+            <a href="/retrievalQuery" id="retrievalQuery">检索查询</a>
+            <img id="retrievalQuery" src="./img/检索.png" alt="">
+        </li>
+        <li class="left" v-show="cookie==2" style="display: none" v-cloak>
+            <a href="/userManagement" id="userManagement" >用户管理</a>
+            <img id="yhgl_im" src="./img/用户管理拷贝.png" alt="">
+        </li>
+    </div>
+    <!--右侧-->
+    <div class="right_div1" id="rightDiv1">
+        <div class="btnGrop">
+            <ul class="nav nav-tabs">
+                <li role="presentation" id="StockOutlist1" class="active"
+                    onclick="qiehuan(this,'#StockInlist1','#goodsM1','#StockOutlist2','#StockInlist2','#goodsM2','goodsM4' )">
+                    <a style="font-size: 15px;" href="javascript:;" v-on:click="outclean()">出库单</a>
+                </li>
+                <li role="presentation" id="StockInlist1"
+                    onclick="qiehuan(this,'#StockOutlist1', '#goodsM1','#StockInlist2','#StockOutlist2','#goodsM2','goodsM4' )">
+                    <a style="font-size: 15px;" href="javascript:;" v-on:click="inclean()">入库单</a>
+                </li>
+                <li role="presentation" id="goodsM1"
+                    onclick="qiehuan(this,'#StockInlist1','#StockOutlist1','#goodsM2','#StockOutlist2','#StockInlist2','goodsM4' )">
+                    <a style="font-size: 15px;" href="javascript:;" v-on:click="goodclean()">物资器材</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!--出库单查询-->
+        <div id="StockOutlist2" style="display: block;margin: 0px 30px 0 30px;">
+            <div class="Stock" id="Stockout1" style="display: block; ">
+                <table id="handle" class="handle" style="min-width: 900px">
+                    <tr>
+                        <td>出库单编号：</td>
+                        <td><input type="text" name="stockoutnumber" v-model="output.oid"></td>
+                        &nbsp;
+                        <td></td>
+                        <td colspan="3">出库时间：<input type="text" style="margin-left: 0;" placeholder="请输入开始日期"
+                                                    class="laydate-icon" id="mydate3" v-model="output.startime">
+                            <span>--</span>
+                            <input type="text" placeholder="请输入结束日期" class="laydate-icon" id="mydate4"
+                                   v-model="output.closetime"></td>
+                    </tr>
+                    <tr>
+                        <td>领取单位：</td>
+                        <td><input type="text" name="receivingUnit" v-model="output.com_cat"></td>
+                        &nbsp;
+                        <td>领取人：</td>
+                        <td><input type="text" name="receivingPerson" v-model="output.twopeople"></td>
+                        <td>发放人：</td>
+                        <td><input type="text" name="issUser" v-model="output.onepeople"></td>
+                        <td>负责人：</td>
+                        <td><input type="text" name="funUser" v-model="output.threepeople"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="重置" class="input-btn" style="width: 80px;"
+                                   v-on:click="outclean()">
+                            <input type="button" value="提交" class="input-btn" style="width: 80px;"
+                                   v-on:click="outSubmit()"></td>
+                    </tr>
+                </table>
+            </div>
+            <p id="btn-handle"><a href="###" onclick="openShutManager(this,'Stockout1',false,'收起','展开')"
+                                  style="text-decoration: none;color: #9D9D9D;padding-right: 10px; background: url(img/箭头.png)no-repeat 25px 5px;">收起</a>
+            </p>
+
+            <!--出库单列表-->
+            <div id="StockOutlist3" class="StockOutlist3" v-show="output.xianshi" style="display: none" v-cloak>
+                <!--<div class="oddicon">-->
+                <!--<span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>-->
+                <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
+                <!--</div>-->
+                <div style="overflow-x: auto;margin-top: 10px;">
+                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                        <!--页头-->
+                        <thead>
+                        <tr style="background: #1458a7;color: #fff;height: 30px;">
+                            <th style="font-size: 15px;">序号</th>
+                            <th style="font-size: 15px;">编号</th>
+                            <th style="font-size: 15px;">领取单位</th>
+                            <th style="font-size: 15px;">领取人</th>
+                            <th style="font-size: 15px;">发放人</th>
+                            <th style="font-size: 15px;">负责人</th>
+                            <th style="font-size: 15px;">出库时间</th>
+                            <th style="font-size: 15px;">操作</th>
+                        </tr>
+                        </thead>
+                        <!--分区：页脚 -->
+                        <tfoot>
+                        </tfoot>
+                        <!-- 分区：主体 -->
+                        <tbody id="tbody">
+                        <tr v-for="(item,index) in goodslist">
+                            <td>{{index+1}}</td>
+                            <td>{{item.oid}}</td>
+                            <td>{{item.com_cat}}</td>
+                            <td>{{item.twopeople}}</td>
+                            <td>{{item.onepeople}}</td>
+                            <td>{{item.threepeople}}</td>
+                            <td>{{item.time}}</td>
+                            <td><input type="button" value="详情" class="xq-btn" id="xq-Out"
+                                       v-on:click="outquery(item.oid)"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--分页显示-->
+                <div style="float:right;padding:10px 0" id="div1">
+                    <p>
+                        <button v-on:click="outfirst()" class="btn btn-primary btn-sm" id="sy">第一页</button>
+                        <button v-on:click="outon()" class="btn btn-primary btn-sm" id="syy">上一页</button>
+                        <button v-on:click="outdown()" class="btn btn-primary btn-sm" id="xyy">下一页</button>
+                        <button v-on:click="outlast()" class="btn btn-primary btn-sm" id="my">最后一页</button>
+                        共<span style="text-align: center;width:45px;display: inline-block;" id="tiaoshu">{{num}}</span>
+                        </select>条,
+                        第<span style="text-align: center;width:74px;display: inline-block;" id="pageNum">{{page}}/{{pages}}</span>页
+                        <!--<input style="width: 50px;" id="ty" value=""/>-->
+                        <!--<button onclick="selectByPage()" id="tz" class="btn btn-primary btn-sm">确定</button>-->
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--入库单列表-->
+        <div id="StockInlist2" style="display:none;margin: 0px 30px 0 30px;">
+            <!--入库单查询-->
+            <div class="Stock" id="Stockout2" style="display: block;">
+                <table id="handle" class="handle" style="min-width: 900px">
+                    <tr>
+                        <td>入库单编号：</td>
+                        <td><input type="text" name="stockoutnumber" v-model="input.oid"></td>
+                        &nbsp;
+                        <td></td>
+                        <td colspan="3">入库时间：<input type="text" style="margin-left: 0;" placeholder="请输入开始日期"
+                                                    class="laydate-icon" id="mydate5" v-model="input.startime">
+                            <span>--</span>
+                            <input type="text" placeholder="请输入结束日期" class="laydate-icon" id="mydate6"
+                                   v-model="input.closetime"></td>
+                    </tr>
+                    <tr>
+                        <td>物品类别：</td>
+                        <td>
+                            <select v-model="input.com_cat" style="width: 132px; height: 30px;">
+                                <option disabled value="">请选择</option>
+                                <option value="1">上级调拨</option>
+                                <option value="2">本级自筹</option>
+                            </select>
+                        </td>
+                        <!--<td><input type="text" name="receivingUnit" v-model="input.com_cat"></td>-->
+                        <td>保管员：</td>
+                        <td><input type="text" name="receivingPerson" v-model="input.twopeople"></td>
+                        <td>发放人：</td>
+                        <td><input type="text" name="issUser" v-model="input.onepeople"></td>
+                        <td>负责人：</td>
+                        <td><input type="text" name="funUser" v-model="input.threepeople"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="重置" class="input-btn" style="width: 80px;"
+                                   v-on:click="inclean()">
+                            <input type="button" value="提交" class="input-btn" style="width: 80px;"
+                                   v-on:click="inSubmit()"></td>
+                    </tr>
+                </table>
+            </div>
+            <p id="btn-handle">
+                <a href="###" onclick="openShutManager(this,'Stockout2',false,'收起','展开')"
+                   style="text-decoration: none;color: #9D9D9D;padding-right: 10px; background: url(img/箭头.png)no-repeat 25px 5px;">收起</a>
+            </p>
+
+            <!--入库单列表-->
+            <div id="StockInlist3" class="StockInlist3" v-show="input.xianshi">
+                <!--<div class="oddicon">-->
+                <!--<span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>-->
+                <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
+                <!--</div>-->
+                <div style="overflow-x: auto;margin-top: 10px;">
+                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                        <!--页头-->
+                        <thead>
+                        <tr style="background: #1458a7;color: #fff;height: 30px;">
+                            <th style="font-size: 15px;">序号</th>
+                            <th style="font-size: 15px;">编号</th>
+                            <th style="font-size: 15px;">物品类别</th>
+                            <th style="font-size: 15px;">保管员</th>
+                            <th style="font-size: 15px;">发放人</th>
+                            <th style="font-size: 15px;">负责人</th>
+                            <th style="font-size: 15px;">入库时间</th>
+                            <th style="font-size: 15px;">操作</th>
+                        </tr>
+                        </thead>
+                        <!--分区：页脚 -->
+                        <tfoot>
+                        </tfoot>
+                        <!-- 分区：主体 -->
+                        <tbody id="tbody">
+                        <tr v-for="(item,index) in goodslist">
+                            <td>{{index+1}}</td>
+                            <td>{{item.oid}}</td>
+                            <td>{{item.com_cat}}</td>
+                            <td>{{item.twopeople}}</td>
+                            <td>{{item.onepeople}}</td>
+                            <td>{{item.threepeople}}</td>
+                            <td>{{item.time}}</td>
+                            <td><input type="button" value="详情" class="xq-btn" id="xq-Out"
+                                       v-on:click="inquery(item.oid)"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--分页显示-->
+                <div style="float:right;padding:10px 0" id="div1">
+                    <p>
+                        <button v-on:click="infirst()" class="btn btn-primary btn-sm" id="sy">第一页</button>
+                        <button v-on:click="inon()" class="btn btn-primary btn-sm" id="syy">上一页</button>
+                        <button v-on:click="indown()" class="btn btn-primary btn-sm" id="xyy">下一页</button>
+                        <button v-on:click="inlast()" class="btn btn-primary btn-sm" id="my">最后一页</button>
+                        共<span style="text-align: center;width:45px;display: inline-block;" id="tiaoshu">{{num}}</span>
+                        </select>条,
+                        第<span style="text-align: center;width:74px;display: inline-block;" id="pageNum">{{page}}/{{pages}}</span>页
+                        <!--<input style="width: 50px;" id="ty" value=""/>-->
+                        <!--<button onclick="selectByPage()" id="tz" class="btn btn-primary btn-sm">确定</button>-->
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!--物资器材列表-->
+        <div id="goodsM2" style="display:none;margin: 0px 30px 0 30px;">
+            <!--物资单查询-->
+            <div class="Stock" id="Stockout3" style="display: block;">
+                <table class="handle" id="handle" style="min-width: 580px">
+                    <tr>
+                        <td>物品名称：<input type="text" name="stockoutnumber" v-model="good.sname"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>规格：<input type="text" name="receivingUnit" v-model="good.size"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="reset" value="重置" class="input-btn" style="width: 80px;"
+                                   v-on:click="goodclean()">
+                            <input type="button" value="提交" class="input-btn" style="width: 80px;"
+                                   v-on:click="goodSubmit()"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <p id="btn-handle">
+                <a href="###" onclick="openShutManager(this,'Stockout3',false,'收起','展开')"
+                   style="text-decoration: none;color: #9D9D9D;padding-right: 10px; background: url(img/箭头.png)no-repeat 25px 5px;">收起</a>
+            </p>
+            <!--物资单列表-->
+            <div id="goodsM3" class="goodsM3" v-show="good.xianshi">
+                <!--<div class="oddicon">-->
+                <!--<span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>-->
+                <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
+                <!--</div>-->
+                <div style="overflow-x: auto;margin-top: 10px;">
+                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                        <!--页头-->
+                        <thead>
+                        <tr style="background: #1458a7;color: #fff;height: 30px;">
+                            <th style="font-size: 15px;">序号</th>
+                            <th style="font-size: 15px;">品名</th>
+                            <th style="font-size: 15px;">规格型号</th>
+                            <th style="font-size: 15px;">单位</th>
+                            <th style="font-size: 15px;">单价</th>
+                            <th style="font-size: 15px;">库存</th>
+                            <th style="font-size: 15px;">操作</th>
+                        </tr>
+                        </thead>
+                        <!--分区：页脚 -->
+                        <tfoot>
+                        </tfoot>
+                        <!-- 分区：主体 -->
+                        <tbody id="tbody" v-for="(item,index) in goodslist">
+                        <tr>
+                            <td>{{index+1}}</td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.size}}</td>
+                            <td>{{item.unit}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.kucun}}</td>
+                            <td>
+                                <button id="xq-goods" class="xq-btn" v-on:click="goodquery(item.sname,item.size)">详情
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--分页显示-->
+                <div style="float:right;padding:10px 0" id="div1" v-show="good.fyxianshi">
+                    <p>
+                        <button v-on:click="goodfirst()" class="btn btn-primary btn-sm" id="sy">第一页</button>
+                        <button v-on:click="goodon()" class="btn btn-primary btn-sm" id="syy">上一页</button>
+                        <button v-on:click="gooddown()" class="btn btn-primary btn-sm" id="xyy">下一页</button>
+                        <button v-on:click="goodlast()" class="btn btn-primary btn-sm" id="my">最后一页</button>
+                        共<span style="text-align: center;width:45px;display: inline-block;" id="tiaoshu">{{num}}</span>
+                        </select>条,
+                        第<span style="text-align: center;width:74px;display: inline-block;" id="pageNum">{{page}}/{{pages}}</span>页
+                        <!--<input style="width: 50px;" id="ty" value=""/>-->
+                        <!--<button onclick="selectByPage()" id="tz" class="btn btn-primary btn-sm">确定</button>-->
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--物资详情弹窗-->
+        <div class="dialog-background" style="display:none;" v-show="good.xqxianshi" style="display: none" v-cloak>
+            <div class="dialog-container">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" v-on:click="goodclose"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" style="text-align: center;">物资详情</h4>
+                    <!--<div class="oddicon1">-->
+                    <!--<span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a :href="'http://127.0.0.1:3000/word/out/' + goods.oid ">导出</a></span>-->
+                    <!--<span class="oddicon-prt1" id="oddicon-out"><img src="img/打印.png"/><br/>打印</span>-->
+                    <!--</div>-->
+                </div>
+                <div class="modal-body">
+                    <table border="0" width="95%">
+                        <tr>
+                            <td>品名：</td>
+                            <td>
+                                <a id="goods-name" class="form-a">{{querylist.sname}}</a>
+                            </td>
+                            <td>型号规格：</td>
+                            <td>
+                                <a id="xh" class="form-a">{{querylist.size}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--<td>单价：</td>-->
+                            <!--<td>-->
+                            <!--<a id="unit-price" class="form-a">30.00</a>-->
+                            <!--</td>-->
+                            <td>库存：</td>
+                            <td>
+                                <a id="Stock" class="form-a">{{querylist.kucun}}</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--属性列表-->
+                    <div style="overflow: auto;margin-left: 0px;margin-top: 20px;height: 300px;">
+                        <table class="table table-bordered table-hover" style="min-width: 1024px">
+                            <!--页头-->
+                            <thead>
+                            <tr style="background: #1458a7;color: #fff;height: 30px;">
+                                <th style="font-size: 15px;">序号</th>
+                                <th style="font-size: 15px;">订单编号</th>
+                                <th style="font-size: 15px;">订单类型</th>
+                                <th style="font-size: 15px;">数量</th>
+                                <th style="font-size: 15px;">日期</th>
+                                <th style="font-size: 15px;">操作</th>
+                            </tr>
+                            </thead>
+                            <!--分区：页脚 -->
+                            <tfoot>
+                            <tr>
+
+                            </tr>
+                            </tfoot>
+                            <!-- 分区：主体 -->
+                            <tbody id="tbody">
+                            <tr v-for="(item,index) in querylist.result">
+                                <td>{{index+1}}</td>
+                                <td>{{item.oid}}</td>
+                                <td>{{item.type}}</td>
+                                <td>{{item.num}}</td>
+                                <td>{{item.time}}</td>
+                                <td><input type="button" value="详情" class="xq-btn" id="xq-ret"
+                                           v-on:click="query(item.oid)"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--分页-->
+                    <!--<div style="float:right;padding:10px 0 ; margin-right:30px;">-->
+                    <!--<p>-->
+                    <!--<button onclick="first()" class="btn btn-primary btn-sm" id="sy">第一页</button>-->
+                    <!--<button onclick="prevpage()" class="btn btn-primary btn-sm" id="syy">上一页</button>-->
+                    <!--<button onclick="nextpage()" class="btn btn-primary btn-sm" id="xyy">下一页</button>-->
+                    <!--<button onclick="last()" class="btn btn-primary btn-sm" id="my">最后一页</button>-->
+                    <!--共<span style="text-align: center;width:45px;display: inline-block;" id="tiaoshu"></span>-->
+                    <!--</select>条,-->
+                    <!--第<span style="text-align: center;width:74px;display: inline-block;" id="pageNum"></span>页-->
+                    <!--&lt;!&ndash;<input style="width: 50px;" id="ty" value=""/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button onclick="selectByPage()" id="tz" class="btn btn-primary btn-sm">确定</button>&ndash;&gt;-->
+                    <!--</p>-->
+                    <!--&lt;!&ndash;<div class="modal-footer">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary" onclick="closeAdd()">关闭</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary" onclick="save()">保存</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                    <button type="button" class="btn btn-primary" v-on:click="goodclose">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+        <!--判断弹窗-->
+
+        <!-- 入库单详情弹窗-->
+        <div class="dialog-background" id="StockInlist5" v-show="input.xqxianshi" style="display: none" v-cloak>
+            <div class="dialog-container">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" v-on:click="inputclose()"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" style="text-align: center;">入库单</h4>
+                    <div class="oddicon1">
+                        <span class="oddicon-in1"><img src="img/导出(1).png"/><br/><a
+                                :href="url+'/word/out/' + goods.oid ">导出</a></span>
+                        <span class="oddicon-prt1"><img src="img/打印.png"/><br/>打印</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table border="0" width="95%">
+                        <tr>
+                            <td>物品类别：</td>
+                            <td>
+                                <a id="out-unit" class="form-a">{{goods.com_cat}}</a>
+                            </td>
+                            <td>负责人：</td>
+                            <td>
+                                <a id="fun-person" class="form-a">{{goods.threepeople}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>保管人：</td>
+                            <td>
+                                <a id="attr_desc1" class="form-a">{{goods.twopeople}}</a>
+                            </td>
+                            <td>发放人：</td>
+                            <td>
+                                <a id="attr_desc1" class="form-a">{{goods.onepeople}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>出库时间：</td>
+                            <td><a id="out-time" class="form-a">{{goods.time}}</a></td>
+                        </tr>
+                    </table>
+                    <!--属性列表-->
+                    <div style="overflow: auto;margin-left: 0px;margin-top: 20px;height: 300px;">
+                        <table class="table table-bordered table-hover" style="min-width: 1024px">
+                            <!--页头-->
+                            <thead>
+                            <tr style="background: #1458a7;color: #fff;height: 30px;">
+                                <th style="font-size: 15px;">序号</th>
+                                <th style="font-size: 15px;">品名</th>
+                                <th style="font-size: 15px;">规格型号</th>
+                                <th style="font-size: 15px;">单位</th>
+                                <th style="font-size: 15px;">单价</th>
+                                <th style="font-size: 15px;">数量</th>
+                                <th style="font-size: 15px;">总价</th>
+
+                            </tr>
+                            </thead>
+                            <!--分区：页脚 -->
+                            <tfoot>
+                            </tfoot>
+                            <!-- 分区：主体 -->
+                            <tbody id="tbody">
+                            <tr v-for="(item,index) in goods.datas">
+                                <td>{{index+1}}</td>
+                                <td>{{item.sname}}</td>
+                                <td>{{item.size}}</td>
+                                <td>{{item.unit}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.num}}</td>
+                                <td>{{item.prices}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="inputclose()">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+        <!--判断弹窗-->
+
+        <!--出库单详情弹窗-->
+        <div class="dialog-background" v-show="output.xqxianshi" style="display: none" v-cloak>
+            <div class="dialog-container">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" v-on:click="outclose()"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" style="text-align: center;">出库单</h4>
+                    <div class="oddicon1">
+                        <span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a
+                                :href="url+'/word/out/' + goods.oid ">导出</a></span>
+                        <span class="oddicon-prt1" id="oddicon-out"><img src="img/打印.png"/><br/>打印</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table border="0" width="95%">
+                        <tr>
+                            <td>领取单位：</td>
+                            <td>
+                                <a id="out-unit" class="form-a">{{goods.com_cat}}</a>
+                            </td>
+                            <td>负责人：</td>
+                            <td>
+                                <a id="fun-person" class="form-a">{{goods.threepeople}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>领取人：</td>
+                            <td>
+                                <a id="attr_desc1" class="form-a">{{goods.twopeople}}</a>
+                            </td>
+                            <td>发放人：</td>
+                            <td>
+                                <a id="attr_desc1" class="form-a">{{goods.onepeople}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>出库时间：</td>
+                            <td><a id="out-time" class="form-a">{{goods.time}}</a></td>
+                        </tr>
+                    </table>
+                    <!--属性列表-->
+                    <div style="overflow: auto;margin-left: 0px;margin-top: 0px;height: 300px;">
+                        <table class="table table-bordered table-hover" style="min-width: 1024px ">
+                            <!--页头-->
+                            <thead>
+                            <tr style="background: #1458a7;color: #fff;height: 30px;">
+                                <th style="font-size: 15px;">序号</th>
+                                <th style="font-size: 15px;">品名</th>
+                                <th style="font-size: 15px;">规格型号</th>
+                                <th style="font-size: 15px;">单位</th>
+                                <th style="font-size: 15px;">单价</th>
+                                <th style="font-size: 15px;">通知数</th>
+                                <th style="font-size: 15px;">实发数</th>
+                                <th style="font-size: 15px;">总金额</th>
+                            </tr>
+                            </thead>
+                            <!--分区：页脚 -->
+                            <tfoot>
+                            </tfoot>
+                            <!-- 分区：主体 -->
+                            <tbody id="tbody">
+                            <tr v-for="(item,index) in goods.datas">
+                                <td>{{index+1}}</td>
+                                <td>{{item.sname}}</td>
+                                <td>{{item.size}}</td>
+                                <td>{{item.unit}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.expectednum}}</td>
+                                <td>{{item.actualnum}}</td>
+                                <td>{{item.prices}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="outclose()">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+</div>
+</div>
+
+<!--判断弹窗-->
+
+<script type="text/javascript">
+    var rightDiv1 = new Vue({
+        el: "#main",
+        data: {
+            cookie:document.cookie.split('=')[1],
+            url: "",
+            goods: [],
+            querylist: [],
+            goodslist: [],
+            pages: 1,
+            num: 0,
+            page: 1,
+            output: {
+                xqxianshi: false,
+                xianshi: false,
+                onepeople: '',
+                twopeople: '',
+                threepeople: '',
+                oid: '',
+                startime: '',
+                closetime: '',
+                com_cat: ''
+            },
+            input: {
+                xqxianshi: false,
+                xianshi: false,
+                onepeople: '',
+                twopeople: '',
+                threepeople: '',
+                oid: '',
+                startime: '',
+                closetime: '',
+                com_cat: ''
+            },
+            good: {
+                xqxianshi: false,
+                xianshi: true,
+                fyxianshi: true,
+                sname: '',
+                size: ''
+            }
+        },
+        mounted: function () {
+        },
+        methods: {
+            //出库单
+            outSubmit: function () {
+                this.output.startime = $("#mydate3").val()
+                this.output.closetime = $("#mydate4").val()
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/output",
+                    data: {
+                        onepeople: this.output.onepeople,
+                        twopeople: this.output.twopeople,
+                        threepeople: this.output.threepeople,
+                        oid: this.output.oid,
+                        startime: this.output.startime,
+                        closetime: this.output.closetime,
+                        com_cat: this.output.com_cat,
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.output.xianshi = true
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+
+                });
+            },
+            outfirst: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/output",
+                    data: {
+                        onepeople: this.output.onepeople,
+                        twopeople: this.output.twopeople,
+                        threepeople: this.output.threepeople,
+                        oid: this.output.oid,
+                        startime: this.output.startime,
+                        closetime: this.output.closetime,
+                        com_cat: this.output.com_cat,
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            outon: function () {
+                if (this.page - 1 <= 0) {
+                    alert("没有上一页了")
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: this.url + "/query/output",
+                        data: {
+                            onepeople: this.output.onepeople,
+                            twopeople: this.output.twopeople,
+                            threepeople: this.output.threepeople,
+                            oid: this.output.oid,
+                            startime: this.output.startime,
+                            closetime: this.output.closetime,
+                            com_cat: this.output.com_cat,
+                            page: this.page - 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            outdown: function () {
+                if (this.page + 1 > this.pages) {
+                    alert("已经是最后一页了")
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: this.url + "/query/output",
+                        data: {
+                            onepeople: this.output.onepeople,
+                            twopeople: this.output.twopeople,
+                            threepeople: this.output.threepeople,
+                            oid: this.output.oid,
+                            startime: this.output.startime,
+                            closetime: this.output.closetime,
+                            com_cat: this.output.com_cat,
+                            page: this.page + 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            outlast: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/output",
+                    data: {
+                        onepeople: this.output.onepeople,
+                        twopeople: this.output.twopeople,
+                        threepeople: this.output.threepeople,
+                        oid: this.output.oid,
+                        startime: this.output.startime,
+                        closetime: this.output.closetime,
+                        com_cat: this.output.com_cat,
+                        page: this.pages
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            outclean: function () {
+                $("#mydate3").val('')
+                $("#mydate4").val('')
+                this.output.xianshi = false
+                this.output.onepeople = ''
+                this.output.twopeople = ''
+                this.output.threepeople = ''
+                this.output.oid = ''
+                this.output.startime = ''
+                this.output.closetime = ''
+                this.output.com_cat = ''
+                this.goodslist = []
+                this.pages = 1
+                this.num = 0
+                this.page = 1
+            },
+            //入库单
+            inSubmit: function () {
+                this.input.startime = $("#mydate5").val()
+                this.input.closetime = $("#mydate6").val()
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/input",
+                    data: {
+                        onepeople: this.input.onepeople,
+                        twopeople: this.input.twopeople,
+                        threepeople: this.input.threepeople,
+                        oid: this.input.oid,
+                        startime: this.input.startime,
+                        closetime: this.input.closetime,
+                        com_cat: this.input.com_cat,
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.input.xianshi = true
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+
+                });
+            },
+            infirst: function () {
+                $.ajax({
+                    type: "POST",
+                    url: "http:127.0.0.1:3000/query/input",
+                    data: {
+                        onepeople: this.input.onepeople,
+                        twopeople: this.input.twopeople,
+                        threepeople: this.input.threepeople,
+                        oid: this.input.oid,
+                        startime: this.input.startime,
+                        closetime: this.input.closetime,
+                        com_cat: this.input.com_cat,
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            inon: function () {
+                if (this.page - 1 <= 0) {
+                    alert("没有上一页了")
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: this.url + "/query/input",
+                        data: {
+                            onepeople: this.input.onepeople,
+                            twopeople: this.input.twopeople,
+                            threepeople: this.input.threepeople,
+                            oid: this.input.oid,
+                            startime: this.input.startime,
+                            closetime: this.input.closetime,
+                            com_cat: this.input.com_cat,
+                            page: this.page - 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            indown: function () {
+                if (this.page + 1 > this.pages) {
+                    alert("已经是最后一页了")
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: this.url + "/query/input",
+                        data: {
+                            onepeople: this.input.onepeople,
+                            twopeople: this.input.twopeople,
+                            threepeople: this.input.threepeople,
+                            oid: this.input.oid,
+                            startime: this.input.startime,
+                            closetime: this.input.closetime,
+                            com_cat: this.input.com_cat,
+                            page: this.page + 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    alert("没有该信息")
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            inlast: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/input",
+                    data: {
+                        onepeople: this.input.onepeople,
+                        twopeople: this.input.twopeople,
+                        threepeople: this.input.threepeople,
+                        oid: this.input.oid,
+                        startime: this.input.startime,
+                        closetime: this.input.closetime,
+                        com_cat: this.input.com_cat,
+                        page: this.pages
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            inclean: function () {
+                $("#mydate5").val('')
+                $("#mydate6").val('')
+                this.input.xianshi = false,
+                    this.input.onepeople = '',
+                    this.input.twopeople = '',
+                    this.input.threepeople = '',
+                    this.input.oid = '',
+                    this.input.startime = '',
+                    this.input.closetime = '',
+                    this.input.com_cat = ''
+                this.goodslist = []
+                this.pages = 1
+                this.num = 0
+                this.page = 1
+            },
+            //商品
+            goodSubmit: function () {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/goods",
+                    data: {
+                        sname: this.good.sname,
+                        size: this.good.size,
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.length > 0) {
+                                rightDiv1.good.fyxianshi = false
+                                rightDiv1.goodslist = data.data
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            goodfirst: function () {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/query/goodslist",
+                    data: {
+                        page: 1
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                rightDiv1.good.xianshi = false
+                                rightDiv1.good.fyxianshi = false
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            goodon: function () {
+                if (this.page - 1 <= 0) {
+                    alert("没有上一页了")
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: this.url + "/query/goodslist",
+                        data: {
+                            page: this.page - 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    rightDiv1.good.xianshi = false
+                                    rightDiv1.good.fyxianshi = false
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            gooddown: function () {
+                if (this.page + 1 > this.pages) {
+                    alert("已经是最后一页了")
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: this.url + "/query/goodslist",
+                        data: {
+                            page: this.page + 1
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                alert(data.msg)
+                            } else {
+                                if (data.data.result.length > 0) {
+                                    rightDiv1.num = data.data.num
+                                    rightDiv1.page = data.data.current_page
+                                    rightDiv1.pages = data.data.pages
+                                    rightDiv1.goodslist = data.data.result
+                                } else {
+                                    rightDiv1.good.xianshi = false
+                                    rightDiv1.good.fyxianshi = false
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+                    });
+                }
+            },
+            goodlast: function () {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/query/goodslist",
+                    data: {
+                        page: this.pages
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                rightDiv1.good.xianshi = false
+                                rightDiv1.good.fyxianshi = false
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            goodclean: function () {
+                this.good.sname = ''
+                this.good.size = ''
+                this.goodslist = []
+                this.pages = 1
+                this.num = 0
+                this.page = 1
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/query/goodslist",
+                    data: {
+                        page: this.page
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            rightDiv1.good.xianshi = false
+                            rightDiv1.good.fyxianshi = false
+                            alert(data.msg)
+                        } else {
+                            if (data.data.result.length > 0) {
+                                rightDiv1.num = data.data.num
+                                rightDiv1.page = data.data.current_page
+                                rightDiv1.pages = data.data.pages
+                                rightDiv1.goodslist = data.data.result
+                            } else {
+                                rightDiv1.good.xianshi = false
+                                rightDiv1.good.fyxianshi = false
+                            }
+                        }
+                    },
+                    error: function () {
+                        rightDiv1.good.xianshi = false
+                        rightDiv1.good.fyxianshi = false
+                        alert("错误");
+                    }
+                });
+            },
+            //详情
+            outquery: function (oid) {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/query/findByOid/" + oid,
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data) {
+                                rightDiv1.goods = data.data
+                                rightDiv1.output.xqxianshi = true
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            outclose: function () {
+                rightDiv1.goods = []
+                rightDiv1.output.xqxianshi = false
+            },
+            inquery: function (oid) {
+                $.ajax({
+                    type: "GET",
+                    url: this.url + "/query/findByOid/" + oid,
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            if (data.data) {
+                                rightDiv1.goods = data.data
+                                rightDiv1.input.xqxianshi = true
+                            } else {
+                                alert("没有该信息")
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            inputclose: function () {
+                rightDiv1.goods = []
+                rightDiv1.input.xqxianshi = false
+            },
+            goodquery: function (sname, size) {
+                $.ajax({
+                    type: "POST",
+                    url: this.url + "/query/shopRecord",
+                    data: {
+                        sname: sname,
+                        size: size
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert(data.msg)
+                        } else {
+                            rightDiv1.querylist = data.data
+                            rightDiv1.good.xqxianshi = true
+                        }
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+                });
+            },
+            goodclose: function () {
+                rightDiv1.goods = []
+                rightDiv1.good.xqxianshi = false
+            },
+            query: function (oid) {
+                if (oid.substring(0, 1) == "R") {
+                    this.inquery(oid)
+                } else {
+                    this.outquery(oid)
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>	

@@ -5,7 +5,8 @@ exports.interceptor=function (req, res,next) {
     if(needLogin(path)) {
         var login = req.session.user;
         if(!login){
-            writeJson(res,0,"未登录")
+            res.render('login')
+            // writeJson(res,0,"未登录")
             return
         }else{
             if(needAdmin(path)){
@@ -21,7 +22,7 @@ exports.interceptor=function (req, res,next) {
 }
 //拦截是否登录
 var needLogin = function(path){
-    let noLoginPath = ['/login']; //不需要登陆的地址
+    let noLoginPath = ['/','/login']; //不需要登陆的地址
     if(noLoginPath.includes(path) || noLoginPath.includes(path+'/')){
         return false
     }else {
@@ -31,7 +32,7 @@ var needLogin = function(path){
 //拦截是否为管理员
 var needAdmin=function(path){
     //需要超级管理员权限
-    let loginadmin=['/user/add','/user/updatestate','/user/delete','/user/list','/user/findone/*']
+    let loginadmin=['/user/add','/user/updatestate','/user/delete','/user/list','/user/findone/*','/user/find','/userManagement']
     if(loginadmin.includes(path) || loginadmin.includes(path+'/')){
         return true
     }else {

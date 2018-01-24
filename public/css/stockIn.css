@@ -1,0 +1,71 @@
+.date-content{
+    	margin: 20px;
+    	text-align: center;
+    	}
+.date-content input {
+	   display: inline-block;
+		  width: 15%;
+		  height: 26px;
+		  text-indent: -10px;
+		  border:1px #ccc solid; 
+	      background:url(../img/date.png) no-repeat 130px;
+	      padding-left:12px; 
+	      font-size:14px; 
+			}
+			.modal-body th,td{
+				border: 1px #DDDDDD solid;
+			}
+.date-content a{
+	display: inline-block;
+	margin-left:-15px;
+	font-size: 18px;
+}	
+.laydate-icon{
+	text-align: center;
+}		
+#btn-add{
+		margin:40px 26px;		
+	}
+.oddicon1{
+	display: inline-block;
+    float: right;
+    font-size: 12px;
+    color: #999;
+   margin-top: -30px;
+    }
+  .oddicon1{
+	display: inline-block;
+    float: right;
+    font-size: 12px;
+    color: #999;
+   margin-top: -30px;
+    }
+    .oddicon-in1{
+    	display: inline-block;
+      margin-right:10px;
+    }
+    .oddicon-out1{
+    	display: inline-block;
+    	 margin-right: 30px;
+    }
+    .oddicon-prt1{
+    	display: inline-block;
+    	margin-right: 44px;
+    }
+    .xq-In{    	
+    	height: 30px;
+	 width: 60px;
+	 margin-right: 10px;
+	 margin-top: 15px;
+	  border-radius: 5px;
+    	cursor: pointer;
+    	color:#FFFFFF;
+    	background: rgb(1,118,214) ;    	
+    }
+     #tbody td,th{
+    	border: 1px #DDDDDD solid;
+    }
+td,th { padding:5px 8px;}
+th { font-weight:normal;}
+.userlist td { background: rgb(234,249,255);text-align: center;}
+.first-th { width:120px; background:rgb(234,249,255);}
