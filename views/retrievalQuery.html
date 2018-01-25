@@ -923,7 +923,7 @@
             infirst: function () {
                 $.ajax({
                     type: "POST",
-                    url: "http:127.0.0.1:3000/query/input",
+                    url: this.url+"/query/input",
                     data: {
                         onepeople: this.input.onepeople,
                         twopeople: this.input.twopeople,
