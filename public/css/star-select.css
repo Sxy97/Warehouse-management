@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+}
+body{
+    background: url(../img/切图0117/背景.png) no-repeat;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+.center-show{
+	-webkit-alt: inherit;
+	position: absolute;
+	top:20%;
+	left:28%;
+	right: 28%;
+	bottom: 20%;		
+	font-size: 28px;
+}
+.star{
+	display: inline-block;
+	background: rgb(195,208,234);
+	border-radius: 5px;
+	height: 44%;
+	width: 48%;
+	text-align: center;
+	line-height: 180px;
+}
+.star:hover{
+	background: rgb(255,255,255);
+	border-radius: 5px;	
+    box-shadow: 2px 2px 10px #101010;
+    color: #2b90e3;
+}
+#out{
+	position: absolute;
+	top: 0px;
+	left: 0px;	
+}
+#in{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+#ret{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+#user{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}

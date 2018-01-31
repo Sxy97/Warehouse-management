@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>出入库管理系统</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/star-select.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+<div id="main">
+    <!--头部区域  -->
+    <div class="header">
+        <div class="text">
+            <a><img src="img/旅徽PNG.png"/> 出入库管理系统</a>
+        </div>
+        <a href="/personal" class="home">
+            <img src="./img/个人中心.png" alt="">
+            <span>个人中心</span>
+        </a>
+        <a class="tuichu" href="/outlogin">
+            <img src="img/退出登录换.png"/>
+            <span>退出登录</span>
+        </a>
+        <div class="h-line"></div>
+    </div>
+    <div class="center-show">
+        <a href="/stockOut" id="out" class="star">出库管理</a>
+        <a href="/stockIn" id="in" class="star">入库管理</a>
+        <a href="/retrievalQuery" id="ret" class="star">检索查询</a>
+        <a href="/userManagement" id="user" class="star" v-show="cookie==2" style="display: none" v-cloak>用户管理</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var kaishi = new Vue({
+        el: "#main",
+        data: {
+            cookie: document.cookie.split('=')[1],
+        }
+    })
+</script>
+</body>
+</html>

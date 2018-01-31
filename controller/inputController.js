@@ -231,7 +231,7 @@ function adds(oid, com_cat, onepeople, twopeople, time, threepeople, type, datas
 function findByOid(oid) {
     return new Promise(function (resolve, reject) {
         if (oid.substr(0, 2) == "RK") {
-            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople from orders where type = 1 and oid =?', [oid],
+            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople,picture from orders where type = 1 and oid =?', [oid],
                 function (err, result) {
                     if (err) {
                         console.log(err)
@@ -239,6 +239,11 @@ function findByOid(oid) {
                     } else {
                         if (result.length > 0) {
                             result[0].time=sd.format(new Date(result[0].time))
+                            if(result[0].picture){
+                                result[0].picture=result[0].picture.split(",")
+                            }else{
+                                result[0].picture=[]
+                            }
                             if (result[0].com_cat == 1) {
                                 result[0].com_cat = "上级调拨"
                             }
@@ -261,7 +266,7 @@ function findByOid(oid) {
                     }
                 })
         } else if (oid.substr(0, 2) == "CK") {
-            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople from orders where type = 0 and oid =? ORDER BY time DESC', [oid],
+            db.query('select oid,com_cat,onepeople,twopeople,time,threepeople,picture from orders where type = 0 and oid =? ORDER BY time DESC', [oid],
                 function (err, result) {
                     if (err) {
                         console.log(err)
@@ -269,6 +274,12 @@ function findByOid(oid) {
                     } else {
                         if (result.length > 0) {
                             result[0].time=sd.format(new Date(result[0].time))
+                            console.log("---"+result[0].picture)
+                            if(result[0].picture){
+                                result[0].picture=result[0].picture.split(",")
+                            }else{
+                                result[0].picture=[]
+                            }
                             db.query('select sname,size,unit,price,expectednum,actualnum,prices from output where oid =?', [oid],
                                 function (err, data) {
                                     if (err) {

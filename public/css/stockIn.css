@@ -12,9 +12,6 @@
 	      padding-left:12px; 
 	      font-size:14px; 
 			}
-			.modal-body th,td{
-				border: 1px #DDDDDD solid;
-			}
 .date-content a{
 	display: inline-block;
 	margin-left:-15px;
@@ -53,18 +50,17 @@
     	margin-right: 44px;
     }
     .xq-In{    	
-    	height: 30px;
-	 width: 60px;
-	 margin-right: 10px;
-	 margin-top: 15px;
-	  border-radius: 5px;
-    	cursor: pointer;
-    	color:#FFFFFF;
-    	background: rgb(1,118,214) ;    	
-    }
-     #tbody td,th{
-    	border: 1px #DDDDDD solid;
-    }
+        height: 30px;
+	    width: 60px;
+	    margin-right: 10px;
+	    margin-top: 15px;
+	    border-radius: 5px;
+        cursor: pointer;
+        color:#FFFFFF;
+        background: rgb(1,118,214) ;    	
+    } 
+  
+    
 td,th { padding:5px 8px;}
 th { font-weight:normal;}
 .userlist td { background: rgb(234,249,255);text-align: center;}

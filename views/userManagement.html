@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>后台管理系统</title>
+    <title>出入库管理系统</title>
+    <link rel="Shortcut Icon" href="E:\test-master\public\img\旅徽PNG.png" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <script type="text/javascript" src="js/jquery.js"></script>
@@ -13,7 +14,7 @@
 <!--头部区域  -->
 <div class="header">
     <div class="text">
-        <img src="./img/组5.png" alt="">
+        <a><img src="img/旅徽PNG.png" />&nbsp;出入库管理系统</a>
     </div>
     <a href="/personal" class="home">
         <img src="./img/个人中心.png" alt="">
@@ -68,9 +69,9 @@
             </button>
         </div>
         <!--属性列表-->
-        <div class="table-aa" style="overflow: auto;margin-left: 28px;margin-right: 20px;">
+        <div class="table-aa" style="overflow: auto;margin-left: 28px;margin-right: 20px;min-height: 460px;">
             <table class="table table-bordered table-hover"
-                   style="min-width: 1024px;border: 1px solid #DDDDDD;border-collapse:collapse;">
+                   style="min-width: 900px; border: 1px solid #DDDDDD;border-collapse:collapse;">
                 <thead>
                 <tr style="background: #1458a7;color: #fff;height: 30px;">
                     <th style="font-size: 15px;"><input type="checkbox" v-model="checkedAll" class="checkbox-user"
@@ -126,34 +127,40 @@
                 </button>
                 <h4 class="modal-title" style="text-align: center;">新增用户</h4>
             </div>
-            <div class="modal-body">
-                <table border="0" width="95%" height="300px">
+            <div class="modal-body" >
+                <table border="0" width="50%" style="margin-left: 25%;margin-right: 25%;" height="300px" >
                     <tr>
                         <!--<td>角色名称：</td>-->
                         <!--<td>-->
                         <!--<input type="text" class="form-control">-->
-                        <!--</td>-->
+                        <!--</td>-->  
+                        <td ></td>
                         <td>用户名：</td>
                         <td>
                             <input type="text" class="form-control" v-model="user.username">
                         </td>
+                        <td ></td>
                     </tr>
                     <tr>
                         <!--<td>性别：</td>-->
                         <!--<td>-->
                         <!--<label><input type="radio" value="boy" name="user-sex">男</label>-->
                         <!--<label><input type="radio" value="girl" name="user-sex">女</label>-->
-                        <!--</td>-->
+                        <!--</td>-->  
+                        <td ></td>
                         <td>登录账号：</td>
                         <td>
                             <input type="text" v-model="user.loginname" class="form-control"/>
                         </td>
+                       <td ></td>
                     </tr>
                     <tr>
+                    	<td ></td>
                         <td>账户密码：</td>
                         <td>
                             <input type="password" v-model="user.password" class="form-control"/>
-                        </td>
+                        </td> 
+                        <td ></td>
                         <!--<td>电子邮箱：</td>-->
                         <!--<td>-->
                         <!--<input type="text" id="attr_desc1" class="form-control"/>-->
@@ -163,14 +170,15 @@
                         <!--<td>联系电话：</td>-->
                         <!--<td>-->
                         <!--<input type="text" id="attr_desc1" class="form-control"/>-->
-                        <!--</td>-->
+                        <!--</td>--><td ></td>
                         <td>权限：</td>
                         <td>
                             <input type="radio" value="1" v-model="user.state">
                             <label for="one">普通用户</label>
                             <input type="radio" value="2" v-model="user.state">
                             <label for="two">管理员</label>
-                        </td>
+                        </td>    
+                        <td ></td>
                     </tr>
                 </table>
 
@@ -192,16 +200,18 @@
                 <h4 class="modal-title" style="text-align: center;">编辑用户</h4>
             </div>
             <div class="modal-body">
-                <table border="0" width="95%" height="300px">
+                <table border="0" width="50%" style="margin-left: 25%;margin-right: 25%;" height="300px">
                     <tr>
                         <!--<td>角色名称：</td>-->
                         <!--<td>-->
                         <!--<input type="text" class="form-control">-->
                         <!--</td>-->
+                        <td></td>
                         <td>用户名：</td>
                         <td>
                             <input type="text" disabled="disabled" class="form-control" v-model="user.username">
                         </td>
+                        <td></td>
                     </tr>
                     <tr>
                         <!--<td>性别：</td>-->
@@ -209,10 +219,12 @@
                         <!--<label><input type="radio" value="boy" name="user-sex">男</label>-->
                         <!--<label><input type="radio" value="girl" name="user-sex">女</label>-->
                         <!--</td>-->
+                        <td></td>
                         <td>登录账号：</td>
                         <td>
                             <input type="text" disabled="disabled" v-model="user.loginname" class="form-control"/>
                         </td>
+                        <td></td>
                     </tr>
                     <!--<tr>-->
                     <!--<td>账户密码：</td>-->
@@ -229,6 +241,7 @@
                         <!--<td>-->
                         <!--<input type="text" id="attr_desc1" class="form-control"/>-->
                         <!--</td>-->
+                        <td></td>
                         <td>权限：</td>
                         <td>
                             <input type="radio" value="1" v-model="user.state">
@@ -236,6 +249,7 @@
                             <input type="radio" value="2" v-model="user.state">
                             <label for="two">管理员</label>
                         </td>
+                        <td></td>
                     </tr>
                 </table>
 

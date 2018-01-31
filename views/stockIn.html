@@ -2,13 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>后台管理系统</title>
+    <title>出入库管理系统</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/stockIn.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/zoomify.min.css"/> 
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/zoomify.min.js" ></script>
     <script type="text/javascript">
         //执行一个laydate实例
         laydate.render({
@@ -26,7 +28,7 @@
 <!--头部区域  -->
 <div class="header">
     <div class="text">
-        <img src="./img/组5.png" alt="">
+         <a><img src="img/旅徽PNG.png" />&nbsp;出入库管理系统</a>
     </div>
     <a href="/personal" class="home">
         <img src="./img/个人中心.png" alt="">
@@ -80,11 +82,11 @@
         <button style="background: #0176d6;color: #fff;font-size: 15px;" class="btn-default" id="btn-add"
                 v-on:click="addxianshi=true">新增
         </button>
-        <div class="oddicon">
-            <span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>
-            <span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>
-            <span class="oddicon-prt" id="oddicon-prt"><img src="img/打印.png"/><br/>打印</span>
-        </div>
+        <!--<div class="oddicon">-->
+            <!--<span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>-->
+            <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
+            <!--<span class="oddicon-prt" id="oddicon-prt"><img src="img/打印.png"/><br/>打印</span>-->
+        <!--</div>-->
         <!--属性列表-->
         <div style="overflow-x: auto;margin-left: 28px;margin-top: -30px; margin-right: 20px;">
             <table class="table table-bordered table-hover" style="min-width: 1024px">
@@ -121,7 +123,7 @@
             </table>
         </div>
         <!--分页显示-->
-        <div style="float:right;padding:10px 0" id="div1">
+        <div style="float:right;padding:5px 0;margin-right: 20px;" id="div1">
             <p>
                 <button v-on:click="first()" class="btn btn-primary btn-sm" id="sy">第一页</button>
                 <button v-on:click="on()" class="btn btn-primary btn-sm" id="syy">上一页</button>
@@ -146,7 +148,7 @@
                 </button>
                 <h4 class="modal-title" style="text-align: center;">入库单</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="min-height: 400px;max-height: 450px;">
                 <table border="0" width="95%">
                     <tr>
                         <td>物品类别：</td>
@@ -172,72 +174,78 @@
                         </td>
                     </tr>
                 </table>
-                <!--属性列表-->
-                <div style="overflow: auto;margin-left: 0px;margin-top: 20px;height: 300px;">
-                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+             <!---属性列表-->
+               <div class="sti-tbl-container"  style="height: 285px; margin-left: 10px;margin-top: 20px;">                
                         <!--页头-->
-                        <thead>
+                        <div class="sti-tbl-header" style="padding-right:10px;">
+                        	<table class="table table-bordered" style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
+                             <thead>
                         <tr style="background: #1458a7;color: #fff;height: 30px;">
                             <th style="font-size: 15px;white-space: nowrap;">序号</th>
-                            <th style="font-size: 15px;">品名</th>
-                            <th style="font-size: 15px;">规格型号</th>
-                            <th style="font-size: 15px;">单位</th>
-                            <th style="font-size: 15px;">单价</th>
-                            <th style="font-size: 15px;">数量</th>
-                            <th style="font-size: 15px; white-space: nowrap;">金额</th>
-                            <th style="font-size: 15px;width: 20%;" >操作</th>
-                        </tr>
+                            <th style="font-size: 15px;white-space: nowrap;">品名</th>
+                            <th style="font-size: 15px;white-space: nowrap;">规格型号</th>
+                            <th style="font-size: 15px;white-space: nowrap;">单位</th>
+                            <th style="font-size: 15px;white-space: nowrap;">单价</th>
+                            <th style="font-size: 15px;white-space: nowrap;">数量</th>
+                            <th style="font-size: 15px;white-space: nowrap;">金额</th>
+                            <th style="font-size: 15px;width: 140px;white-space: nowrap;" >操作</th>
+                       </tr>
                         </thead>
+                         </table>
+                            </div>
                         <!--分区：页脚 -->
                         <tfoot>
                         </tfoot>
                         <!-- 分区：主体 -->
+                        <div class="sti-tbl-body">
+                           <table class="table table-bordered" style="min-width: 800px;">
                         <tbody id="tbody">
                         <tr v-for="(item,index) in inputs.datas" v-if="inputs.datas.length>0">
-                            <td v-if="index!=vindex">{{index+1}}</td>
-                            <td v-if="index!=vindex">{{item.sname}}</td>
-                            <td v-if="index!=vindex">{{item.size}}</td>
-                            <td v-if="index!=vindex">{{item.unit}}</td>
-                            <td v-if="index!=vindex">{{item.price}}</td>
-                            <td v-if="index!=vindex">{{item.num}}</td>
-                            <td v-if="index!=vindex">{{item.prices}}</td>
-                            <td v-if="index!=vindex" style="white-space: nowrap;">
+                            <td v-if="index!=vindex"class="input-wid">{{index+1}}</td>
+                            <td v-if="index!=vindex" class="input-wid">{{item.sname}}</td>
+                            <td v-if="index!=vindex"class="input-wid">{{item.size}}</td>
+                            <td v-if="index!=vindex"class="input-wid">{{item.unit}}</td>
+                            <td v-if="index!=vindex"class="input-wid">{{item.price}}</td>
+                            <td v-if="index!=vindex"class="input-wid">{{item.num}}</td>
+                            <td v-if="index!=vindex"class="input-wid">{{item.prices}}</td>
+                            <td v-if="index!=vindex" style="white-space: nowrap;width: 140px;">
                                 <input type="button" value="修改" class="xq-btn" id="xq-Out"
                                                             v-on:click="vindex=index"/>
                                 <input type="button" value="删除" class="xq-btn" id="xq-Out"
                                        v-on:click="deleteshop(index)"/></td>
 
                             <td v-if="index==vindex">{{index+1}}</td>
-                            <td v-if="index==vindex"><input type="text" v-model="item.sname"/></td>
-                            <td v-if="index==vindex"><input type="text" v-model="item.size"/></td>
-                            <td v-if="index==vindex"><input type="text" v-model="item.unit"/></td>
-                            <td v-if="index==vindex"><input type="text" v-model="item.price"/></td>
-                            <td v-if="index==vindex"><input type="text" v-model="item.num"/></td>
-                            <td v-if="index==vindex">
+                            <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.sname"/></td>
+                            <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.size"/></td>
+                            <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.unit"/></td>
+                            <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.price"/></td>
+                            <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.num"/></td>
+                            <td v-if="index==vindex" class="input-wid">
                                 {{item.price*item.num}}
                             </td>
-                            <td v-if="index==vindex"><input type="button" value="保存" class="xq-btn"
+                            <td v-if="index==vindex" width="140px"><input type="button" value="保存" class="xq-btn"
                                                             v-on:click="saveshop(index,item.price,item.num)"/>
+                            </td>
                         </tr>
                         <tr v-show="shop.addshopxianshi">
                             <td></td>
-                            <td><input type="text" v-model="shop.sname"/></td>
-                            <td><input type="text" v-model="shop.size"/></td>
-                            <td><input type="text" v-model="shop.unit"/></td>
-                            <td><input type="text" v-model="shop.price"/></td>
-                            <td><input type="text" v-model="shop.num"/></td>
-                            <td>
+                            <td><input type="text" class="input-wid" v-model="shop.sname"/></td>
+                            <td><input type="text" class="input-wid" v-model="shop.size"/></td>
+                            <td><input type="text" class="input-wid" v-model="shop.unit"/></td>
+                            <td><input type="text" class="input-wid" v-model="shop.price"/></td>
+                            <td><input type="text" class="input-wid" v-model="shop.num"/></td>
+                            <td class="input-wid">
                                 {{shop.price*shop.num}}
                             </td>
-                            <td><input type="button" value="保存" class="xq-btn" v-on:click="addSave()"/></td>
+                            <td width="140px"><input type="button" value="保存" class="xq-btn" v-on:click="addSave()"/></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+               </div>
+            </div>      
             <div class="add" id="add"
-                 style="height: 20px; width: 830px;margin-bottom:10px;margin-top:-10px; text-align: right; "
-                 v-on:click="shop.addshopxianshi=true">
+                 style="height: 20px; width: 930px;margin-bottom:5px;text-align: right;" v-on:click="shop.addshopxianshi=true">
                 <img src="img/增加.png"/>
             </div>
             <div class="modal-footer">
@@ -246,8 +254,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div>
-    <!--判断弹窗-->
-    </table>
+    <!--判断弹窗-->   
 
     <!--详情弹窗-->
     <div class="dialog-background" id="StockInlist5" style="display:none;" v-show="xianshi" v-cloak>
@@ -257,77 +264,89 @@
                 </button>
                 <h4 class="modal-title" style="text-align: center;">入库单</h4>
                 <div class="oddicon1">
-                    <span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a
-                            :href="url+'/word/out/' + goods.oid ">导出</a></span>
-                    <span class="oddicon-prt1" id="oddicon-out"><img src="img/打印.png"/><br/>打印</span>
+                    <!--<span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a-->
+                            <!--:href="url+'/word/out/' + goods.oid " style="color: #999999;">导出</a></span>-->
+                    <span class="oddicon-prt1" id="oddicon-out"><a
+                            :href="url+'/word/out/' + goods.oid " style="color: #999999;"><img src="img/导出(1).png"/><br/>导出</a></span>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="min-height: 395px">
                 <table border="0" width="95%">
                     <tr>
-                        <td>物品类别：</td>
-                        <td>
-                            <a id="out-unit" class="form-a">{{goods.com_cat}}</a>
-                        </td>
-                        <td>负责人：</td>
-                        <td>
-                            <a id="fun-person" class="form-a">{{goods.threepeople}}</a>
-                        </td>
+                        <td class="right-a"><b>物品类别：</b></td>
+                        <td class="left-a"><b id="out-unit" class="form-a">{{goods.com_cat}}</b></td>
+                        <td class="right-a"><b>负责人：</b></td>
+                        <td class="left-a"><b id="fun-person" class="form-a">{{goods.threepeople}}</b></td>
                     </tr>
                     <tr>
-                        <td>领取人：</td>
-                        <td>
-                            <a id="attr_desc1" class="form-a">{{goods.twopeople}}</a>
-                        </td>
-                        <td>发放人：</td>
-                        <td>
-                            <a id="attr_desc1" class="form-a">{{goods.onepeople}}</a>
-                        </td>
+                    	<td class="right-a"><b>出库时间：</b></td>
+                        <td class="left-a"><b id="out-time" class="form-a">{{goods.time}}</b></td>
+                        <td class="right-a"><b>领取人：</b></td>
+                        <td class="left-a"><b id="attr_desc1" class="form-a">{{goods.twopeople}}</b></td>                        
                     </tr>
                     <tr>
-                        <td>出库时间：</td>
-                        <td><a id="out-time" class="form-a">{{goods.time}}</a></td>
+                        <td colspan="2"></td>
+                       <td class="right-a"><b>发放人：</b></td>
+                       <td class="left-a"><b id="attr_desc1" class="form-a">{{goods.onepeople}}</b></td>
                     </tr>
                 </table>
-                <!--属性列表-->
-                <div style="overflow: auto;margin-left: 0px;margin-top: 20px;height: 300px;">
-                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+             <!---属性列表-->
+               <div class="sti-tbl-container"  style="min-height:  272px;max-height: 275px" >
                         <!--页头-->
-                        <thead>
+                        <div class="sti-tbl-header" style="padding-right:10px;">
+                        	<table class="table table-bordered" style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
+                             <thead>
                         <tr style="background: #1458a7;color: #fff;height: 30px;">
-                            <th style="font-size: 15px;">序号</th>
-                            <th style="font-size: 15px;">品名</th>
-                            <th style="font-size: 15px;">规格型号</th>
-                            <th style="font-size: 15px;">单位</th>
-                            <th style="font-size: 15px;">单价</th>
-                            <th style="font-size: 15px;">数量</th>
-                            <th style="font-size: 15px;">总价</th>
+                            <th style="font-size: 15px;white-space: nowrap; ">序号</th>
+                            <th style="font-size: 15px;white-space: nowrap;">品名</th>
+                            <th style="font-size: 15px;white-space: nowrap;">规格型号</th>
+                            <th style="font-size: 15px;white-space: nowrap;">单位</th>
+                            <th style="font-size: 15px;white-space: nowrap;">单价</th>
+                            <th style="font-size: 15px;white-space: nowrap;">数量</th>
+                            <th style="font-size: 15px;white-space: nowrap;">总价</th>
                         </tr>
                         </thead>
+                         </table>
+                            </div>
                         <!--分区：页脚 -->
                         <tfoot>
                         </tfoot>
                         <!-- 分区：主体 -->
+                          <div class="sti-tbl-body">
+                           <table class="table table-bordered" style="min-width: 900px;">
                         <tbody id="tbody">
                         <tr v-for="(item,index) in goods.datas">
-                            <td>{{index+1}}</td>
-                            <td>{{item.sname}}</td>
-                            <td>{{item.size}}</td>
-                            <td>{{item.unit}}</td>
-                            <td>{{item.price}}</td>
-                            <td>{{item.num}}</td>
-                            <td>{{item.prices}}</td>
+                            <td class="input-wid">{{index+1}}</td>
+                            <td class="input-wid">{{item.sname}}</td>
+                            <td class="input-wid">{{item.size}}</td>
+                            <td class="input-wid">{{item.unit}}</td>
+                            <td class="input-wid">{{item.price}}</td>
+                            <td class="input-wid">{{item.num}}</td>
+                            <td class="input-wid">{{item.prices}}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="close()">关闭</button>
+               </div>
+            </div>          
+                <div class="modal-footer" style="height: 60px;margin-top: -18px;">
+                    <div class="example" v-for='(item,index) in pictures'>
+                        <img v-bind:src="item" class="pictures">
+                        <a href="#" v-on:click="delepictores(index,goods.oid)">
+                            <img src="./img/删除2.png" class="delete" title="删除图片"/>
+                        </a>
+                    </div>
+                    <div class="add-picture">
+                        <form id="picForm">
+                            <input type="hidden" name="oid" v-model="goods.oid">
+                            <a href="#"><input type="file" id="pictures" name="pictures" multiple="multiple"
+                                               v-on:change="addpictores()"> </a>
+                        </form>
+                    </div>
             </div>
         </div><!-- /.modal-content -->
     </div>
-    <!--判断弹窗-->
+    <!--判断弹窗-->    
 </div>
 </div>
 <script>
@@ -357,9 +376,14 @@
                 unit: "",
                 price: 0.00,
                 num: 0
-            }
+            },
+            pictures: []//图片
         },
         mounted: function () {
+            $("body").on("click", ".pictures", function
+                () {
+                $(this).zoomify("zoom");
+            })
            this.do()
         },
         methods: {
@@ -398,6 +422,7 @@
                             alert(data.msg)
                         } else {
                             if (data.data) {
+                               input.pictures = data.data.picture
                                 input.goods = data.data
                                 input.xianshi = true
                             } else {
@@ -413,6 +438,7 @@
             close: function () {
                 input.xianshi = false;
                 input.goods = []
+                input.pictures = []
             },
             first: function () {
                 $.ajax({
@@ -592,6 +618,47 @@
                     },
                     error: function () {
                         alert("错误");
+                    }
+                });
+            },
+            addpictores: function () {
+                var formData = new FormData($("#picForm")[0]);
+                $('#picForm')[0].reset()
+                $.ajax({
+                    url: '/pic/add',
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (value) {
+                        input.pictures = value.paths
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+            },
+            delepictores: function (index, oid) {
+                var delpaths = input.pictures[index]
+                input.pictures.splice(index, 1)
+                $.ajax({
+                    url: 'pic/delete',
+                    type: 'POST',
+                    data: {
+                        oid: oid,
+                        paths: delpaths
+                    },
+                    success: function (value) {
+                        if (value.code == 0) {
+                            alert(value.msg)
+                        } else {
+                            console.log(value.data)
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err)
                     }
                 });
             }

@@ -16,7 +16,7 @@
 <body>
 <!--登录-->
 <div class="login">
-    <div class="titlename">后台管理系统</div>
+    <div class="titlename"><img src="./img/旅徽登陆.png" />&ensp;出入库管理系统</div>
     <div class="username">
         <input type="text" placeholder="账号" v-model="loginname">
     </div>
@@ -55,7 +55,7 @@
                             alert(data.msg)
                         } else {
                             document.cookie="state="+data.data.state;
-                            window.location.href="/stockOut"
+                            window.location.href="star-select"
                         }
                     },
                     error: function () {

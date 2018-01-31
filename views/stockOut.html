@@ -2,14 +2,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>后台管理系统</title>
+    <title>出入库管理系统</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/stockOut.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/zoomify.min.css"/>
     <!--<link rel="stylesheet" href="css/jquery-ui.min.css"/>-->
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/zoomify.min.js"></script>
     <script type="text/javascript">
         //执行一个laydate实例
         laydate.render({
@@ -21,8 +24,8 @@
             btns: ['confirm']
         });
     </script>
-<style type="text/css">
-</style>
+    <style type="text/css">
+    </style>
 </head>
 <body>
 
@@ -30,7 +33,7 @@
     <!--头部区域  -->
     <div class="header">
         <div class="text">
-            <img src="./img/组5.png" alt="">
+            <a><img src="img/旅徽PNG.png"/>&nbsp;出入库管理系统</a>
         </div>
         <a href="/personal" class="home">
             <img src="./img/个人中心.png" alt="">
@@ -85,11 +88,11 @@
             <button style="background: #0176d6;color: #fff;font-size: 15px;" class="btn-default" id="btn-add"
                     v-on:click="addxianshi=true">新增
             </button>
-            <div class="oddicon">
-                <span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>
-                <span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>
-                <span class="oddicon-prt" id="oddicon-prt"><img src="img/打印.png"/><br/>打印</span>
-            </div>
+            <!--<div class="oddicon">-->
+            <!--<span class="oddicon-in" id="oddicon-in"><img src="img/导入copy.png"/><br/>导入</span>-->
+            <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
+            <!--<span class="oddicon-prt" id="oddicon-prt"><img src="img/打印.png"/><br/>打印</span>-->
+            <!--</div>-->
             <!--属性列表-->
             <div style="overflow-x: auto;margin-left: 28px;margin-top: -30px;margin-right: 20px;">
                 <table class="table table-bordered table-hover" style="min-width: 1024px">
@@ -123,13 +126,11 @@
                         <td><input type="button" value="详情" class="xq-btn" id="xq-Out"
                                    v-on:click="outquery(item.oid)"></td>
                     </tr>
-
                     </tbody>
-
                 </table>
             </div>
             <!--分页显示-->
-            <div style="float:right;padding:10px 0;margin-right: 20px" id="div1">
+            <div style="float:right;padding:5px 0;margin-right: 20px" id="div1">
                 <p>
                     <button v-on:click="first()" class="btn btn-primary btn-sm" id="sy">第一页</button>
                     <button v-on:click="on()" class="btn btn-primary btn-sm" id="syy">上一页</button>
@@ -155,17 +156,13 @@
                     </button>
                     <h4 class="modal-title" style="text-align: center;">出库单</h4>
                 </div>
-                <div class="modal-body">
-                    <table border="0" width="95%">
+                <div class="modal-body" style="min-height: 395px;">
+                    <table class="table2" border="0" width="95%">
                         <tr>
                             <td class="icon-bar">领取单位：</td>
                             <td class="icon-bar">
                                 <input type="text" id="out-unit" class="form-control" v-model="outputs.com_cat">
                             </td>
-                            <!--<td class="icon-bar">出库时间</td>-->
-                            <!--<td>-->
-                            <!--<a id="out-time">2017-12-10</a>-->
-                            <!--</td>-->
                         </tr>
                         <tr>
                             <td class="icon-bar">领取人：</td>
@@ -178,105 +175,124 @@
                             </td>
                         </tr>
                     </table>
-                    <!--属性列表-->
-                    <div style="overflow: auto;margin-left: 0px;margin-top: 20px;height: 320px">
-                        <table class="table table-bordered table-hover" style="min-width: 1024px">
-                            <!--页头-->
-                            <thead>
-                            <tr style="background: #1458a7;color: #fff;height: 30px;">
-                                <th style="font-size: 15px;white-space: nowrap;">序号</th>
-                                <th style="font-size: 15px;">品名</th>
-                                <th style="font-size: 15px;">规格型号</th>
-                                <th style="font-size: 15px;white-space: nowrap;">单位</th>
-                                <th style="font-size: 15px;white-space: nowrap;">单价</th>
-                                <th style="font-size: 15px;white-space: nowrap;">库存</th>
-                                <th style="font-size: 15px;">通知数</th>
-                                <th style="font-size: 15px;">实发数</th>
-                                <th style="font-size: 15px; white-space: nowrap;">总金额</th>
-                                <th style="font-size: 15px; width: 20%;">操作</th>
-                            </tr>
-                            </thead>
-                            <!--分区：页脚 -->
-                            <tfoot>
-                            </tfoot>
-                            <!-- 分区：主体 -->
-                            <tbody id="tbody">
-                            <tr v-for="(item,index) in outputs.datas" v-if="outputs.datas.length>0">
-                                <td v-if="index!=vindex">{{index+1}}</td>
-                                <td v-if="index!=vindex">{{item.sname}}</td>
-                                <td v-if="index!=vindex">{{item.size}}</td>
-                                <td v-if="index!=vindex">{{item.unit}}</td>
-                                <td v-if="index!=vindex">{{item.price}}</td>
-                                <td v-if="index!=vindex">{{item.kucun}}</td>
-                                <td v-if="index!=vindex">{{item.expectednum}}</td>
-                                <td v-if="index!=vindex">{{item.actualnum}}</td>
-                                <td v-if="index!=vindex">{{item.prices}}</td>
-                                <td v-if="index!=vindex" style="white-space: nowrap;">
-                                    <input type="button" value="修改" class="xq-btn" id="xq-Out"
-                                           v-on:click="xiugai(index,item.size)"/>
-                                    <input type="button" value="删除" class="xq-btn" id="xq-Out"
-                                           v-on:click="deleteshop(index)"/></td>
-
-                                <td v-if="index==vindex">{{index+1}}</td>
-                                <td v-if="index==vindex">
-                                    <!--<input type="text" v-model="item.sname"/>-->
-                                    <input type="text"  autocomplete="on" v-model="item.sname" v-on:blur=""/>
-                                    <ul class="list-group" style="width:196px"  v-if="!(snamelist.length==1&&snamelist[0]==item.sname)">
-                                        <a href="#" class="list-group-item" v-for='(items,index) in snamelist' v-on:click=''>{{item}}</a>
-                                    </ul>
-                                </td>
-                                <td v-if="index==vindex">
-                                    <!--<input type="text" v-model="item.size"/>-->
-                                    <select v-model="item.size" style="width: 139px; height: 27px;" v-on:blur="">
-                                        <option v-for="option in options">
-                                            {{option}}
-                                        </option>
-                                    </select>
-                                </td>
-                                <td v-if="index==vindex"><input type="text" v-model="item.unit"/></td>
-                                <td v-if="index==vindex"><input type="text" v-model="item.price"/></td>
-                                <td v-if="index==vindex">{{item.kucun}}</td>
-                                <td v-if="index==vindex"><input type="text" v-model="item.expectednum"/></td>
-                                <td v-if="index==vindex"><input type="text" v-model="item.actualnum"/></td>
-                                <td v-if="index==vindex">
-                                    {{item.price*item.actualnum}}
-                                </td>
-                                <td v-if="index==vindex"><input type="button" value="保存" class="xq-btn"
-                                                                v-on:click="saveshop(index,item.price,item.actualnum)"/>
-                            </tr>
-                            <tr v-show="shop.addshopxianshi">
-                                <td></td>
-                                <td>
-                                    <input type="text"  autocomplete="on" v-model="shop.sname" v-on:blur="findsizes(shop.sname)"/>
-                                    <ul class="list-group" style="width:196px"  v-if="!(snamelist.length==1&&snamelist[0]==shop.sname)">
-                                        <a href="#" class="list-group-item" v-for='(item,index) in snamelist' v-on:click='findsizes(item)'>{{item}}</a>
-                                    </ul>
-                                </td>
-                                <td>
-                                <select v-model="shop.size" style="width: 139px; height: 27px;" v-on:blur="findall()">
-                                    <option disabled value="">请选择</option>
-                                    <option v-for="option in options">
-                                        {{option}}
-                                    </option>
-                                </select>
-                                </td>
-                                <!--<td><input type="text" v-model="shop.size"/></td>-->
-                                <td><input type="text" v-model="shop.unit"/></td>
-                                <td><input type="text" v-model="shop.price"/></td>
-                                <td>{{shop.kucun}}</td>
-                                <td><input type="text" v-model="shop.expectednum"/></td>
-                                <td><input type="text" v-model="shop.actualnum"/></td>
-                                <td>
-                                    {{shop.price*shop.actualnum}}
-                                </td>
-                                <td><input type="button" value="保存" class="xq-btn" v-on:click="addSave()"/></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <!---属性列表-->
+                    <div class="sti-tbl-container" style="min-height:  272px" >
+                        <!--页头-->
+                        <div class="sti-tbl-header" style="padding-right:10px;">
+                            <table class="table table-bordered"
+                                   style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
+                                <thead>
+                                <tr style="background: #1458a7;color: #fff;">
+                                    <th style="font-size: 15px;white-space: nowrap;">序号</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">品名</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">规格型号</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">单位</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">单价</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">库存</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">通知数</th>
+                                    <th style="font-size: 15px;white-space: nowrap;">实发数</th>
+                                    <th style="font-size: 15px; white-space: nowrap;">总金额</th>
+                                    <th style="font-size: 15px; white-space: nowrap; width: 140px;">操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!--分区：页脚 -->
+                        <tfoot>
+                        </tfoot>
+                        <!-- 分区：主体 -->
+                        <div class="sti-tbl-body">
+                            <table class="table table-bordered" style="min-width: 800px;">
+                                <tbody id="tbody">
+                                <tr v-for="(item,index) in outputs.datas" v-if="outputs.datas.length>0">
+                                    <td v-if="index!=vindex" class="input-wid">{{index+1}}</td>
+                                    <td v-if="index!=vindex" class="input-wid" v-bind:title="item.sname">{{item.sname}}</td>
+                                    <td v-if="index!=vindex" class="input-wid" v-bind:title="item.size">{{item.size}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.unit}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.price}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.kucun}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.expectednum}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.actualnum}}</td>
+                                    <td v-if="index!=vindex" class="input-wid">{{item.prices}}</td>
+                                    <td v-if="index!=vindex" style="white-space: nowrap;width: 140px;">
+                                        <input type="button" value="修改" class="xq-btn" id="xq-Out"
+                                               v-on:click="xiugai(index,item.size)"/>
+                                        <input type="button" value="删除" class="xq-btn" id="xq-Out"
+                                               v-on:click="deleteshop(index)"/></td>
+                                    <td v-if="index==vindex">{{index+1}}</td>
+                                    <td v-if="index==vindex">
+                                        <input type="text" autocomplete="off" class="input-wid" v-model="item.sname"
+                                               v-on:blur=""/>
+                                        <ul class="list-group" style="width:100px;margin: 0; padding: 0;"
+                                            v-if="!(snamelist.length==1&&snamelist[0]==item.sname)">
+                                            <a href="#" class="list-group-item" v-for='(items,index) in snamelist'
+                                               v-on:click=''>{{item}}</a>
+                                        </ul>
+                                    </td>
+                                    <td v-if="index==vindex">
+                                        <select v-model="item.size"
+                                                style="width: 100px; height: 20px; -webkit-appearance: none;-moz-appearance: none;appearance: none;"
+                                                class="input-wid" v-on:blur="">
+                                            <option v-for="option in options">
+                                                {{option}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.unit"/>
+                                    </td>
+                                    <td v-if="index==vindex"><input type="text" class="input-wid" v-model="item.price"/>
+                                    </td>
+                                    <td v-if="index==vindex">{{item.kucun}}</td>
+                                    <td v-if="index==vindex"><input type="text" class="input-wid"
+                                                                    v-model="item.expectednum"/></td>
+                                    <td v-if="index==vindex"><input type="text" class="input-wid"
+                                                                    v-model="item.actualnum"/></td>
+                                    <td v-if="index==vindex">
+                                        {{item.price*item.actualnum}}
+                                    </td>
+                                    <td v-if="index==vindex" style="width: 140px;"><input type="button" value="保存"
+                                                                                          class="xq-btn"
+                                                                                          v-on:click="saveshop(index,item.price,item.actualnum)"/>
+                                </tr>
+                                <tr v-show="shop.addshopxianshi">
+                                    <td></td>
+                                    <td>
+                                        <input class="input-wid" type="text" autocomplete="on" v-model="shop.sname"
+                                               v-on:blur="findsizes(shop.sname)"/>
+                                        <ul class="list-group" style="width:80px;margin: 0; padding: 0;"
+                                            v-if="!(snamelist.length==1&&snamelist[0]==shop.sname)">
+                                            <a href="#" class="list-group-item" v-for='(item,index) in snamelist'
+                                               v-on:click='findsizes(item)'>{{item}}</a>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <select class="input-wid" v-model="shop.size"
+                                                style="width: 100px; height: 20px;-webkit-appearance: none;-moz-appearance: none;appearance: none;"
+                                                v-on:blur="findall()">
+                                            <option disabled value="">请选择</option>
+                                            <option v-for="option in options">
+                                                {{option}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="input-wid" v-model="shop.unit"/></td>
+                                    <td><input type="text" class="input-wid" v-model="shop.price"/></td>
+                                    <td>{{shop.kucun}}</td>
+                                    <td><input type="text" class="input-wid" v-model="shop.expectednum"/></td>
+                                    <td><input type="text" class="input-wid" v-model="shop.actualnum"/></td>
+                                    <td>
+                                        {{shop.price*shop.actualnum}}
+                                    </td>
+                                    <td style="width: 140px"><input type="button" value="保存" class="xq-btn"
+                                                                    v-on:click="addSave()"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="add" id="add"
-                     style="height: 20px; width: 830px;margin-bottom:10px;margin-top:-10px; text-align: right;"
+                     style="height: 20px; width: 930px;margin-bottom:5px; text-align: right;"
                      v-on:click="shop.addshopxianshi=true">
                     <img src="img/增加.png"/>
                 </div>
@@ -298,81 +314,96 @@
                     </button>
                     <h4 class="modal-title" style="text-align: center;">出库单</h4>
                     <div class="oddicon1">
-                    <span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a
-                            :href="url+'/word/out/' + goods.oid ">导出</a></span>
-                        <span class="oddicon-prt1" id="oddicon-out"><img src="img/打印.png"/><br/>打印</span>
+                    <!--<span class="oddicon-in1" id="oddicon-in"><img src="img/导出(1).png"/><br/><a-->
+                            <!--:href="url+'/word/out/' + goods.oid " style="color: #999999;">导出</a></span>-->
+                        <span class="oddicon-prt1" id="oddicon-out"><a
+                                :href="url+'/word/out/' + goods.oid " style="color: #999999;"><img
+                                src="img/导出(1).png"/><br/>导出</a></span>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table border="0" width="95%">
+                    <table border="0" width="95%" style="text-align: center;">
                         <tr>
-                            <td>领取单位：</td>
-                            <td>
-                                <a id="out-unit" class="form-a">{{goods.com_cat}}</a>
-                            </td>
-                            <td>负责人：</td>
-                            <td>
-                                <a id="fun-person" class="form-a">{{goods.threepeople}}</a>
-                            </td>
+                            <td class="right-a"><b>领取单位：</b></td>
+                            <td class="left-a"><b id="out-unit" class="form-a">{{goods.com_cat}}</b></td>
+                            <td class="right-a"><b>负责人：</b></td>
+                            <td class="left-a"><b id="fun-person" class="form-a">{{goods.threepeople}}</b></td>
                         </tr>
                         <tr>
-                            <td>领取人：</td>
-                            <td>
-                                <a id="attr_desc1" class="form-a">{{goods.twopeople}}</a>
-                            </td>
-                            <td>发放人：</td>
-                            <td>
-                                <a id="attr_desc1" class="form-a">{{goods.onepeople}}</a>
-                            </td>
+                            <td class="right-a"><b>出库时间：</b></td>
+                            <td class="left-a"><b id="out-time" class="form-a">{{goods.time}}</b></td>
+                            <td class="right-a"><b>发放人：</b></td>
+                            <td class="left-a"><b id="attr_desc1" class="form-a">{{goods.onepeople}}</b></td>
                         </tr>
                         <tr>
-                            <td>出库时间：</td>
-                            <td><a id="out-time" class="form-a">{{goods.time}}</a></td>
+                            <td colspan="2"></td>
+                            <td class="right-a"><b>领取人：</b></td>
+                            <td class="left-a"><b id="attr_desc1" class="form-a">{{goods.twopeople}}</b></td>
                         </tr>
                     </table>
                     <!--属性列表-->
-                    <div style="overflow: auto;margin-left: 0px;margin-top: 0px;height: 300px;">
-                        <table class="table table-bordered table-hover" style="min-width: 1024px ">
-                            <!--页头-->
-                            <thead>
-                            <tr style="background: #1458a7;color: #fff;height: 30px;">
-                                <th style="font-size: 15px;">序号</th>
-                                <th style="font-size: 15px;">品名</th>
-                                <th style="font-size: 15px;">规格型号</th>
-                                <th style="font-size: 15px;">单位</th>
-                                <th style="font-size: 15px;">单价</th>
-                                <th style="font-size: 15px;">通知数</th>
-                                <th style="font-size: 15px;">实发数</th>
-                                <th style="font-size: 15px;">总金额</th>
-                            </tr>
-                            </thead>
-                            <!--分区：页脚 -->
-                            <tfoot>
-                            </tfoot>
-                            <!-- 分区：主体 -->
-                            <tbody id="tbody">
-                            <tr v-for="(item,index) in goods.datas">
-                                <td>{{index+1}}</td>
-                                <td>{{item.sname}}</td>
-                                <td>{{item.size}}</td>
-                                <td>{{item.unit}}</td>
-                                <td>{{item.price}}</td>
-                                <td>{{item.expectednum}}</td>
-                                <td>{{item.actualnum}}</td>
-                                <td>{{item.prices}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="sti-tbl-container" style="min-height: 315px; margin-left: 10px;margin-top: 20px;">
+                        <!--页头-->
+                        <div class="sti-tbl-header" style="padding-right:10px;">
+                            <table class="table table-bordered"
+                                   style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
+                                <tr style="background: #1458a7;color: #fff;">
+                                    <th style="font-size: 15px; width: 5%;white-space: nowrap;">序号</th>
+                                    <th style="font-size: 15px;width: 20%;white-space: nowrap;">品名</th>
+                                    <th style="font-size: 15px;width: 20%;white-space: nowrap;">规格型号</th>
+                                    <th style="font-size: 15px;width: 5%;white-space: nowrap;">单位</th>
+                                    <th style="font-size: 15px;width: 5%;white-space: nowrap;">单价</th>
+                                    <th style="font-size: 15px;width: 10%;white-space: nowrap;">通知数</th>
+                                    <th style="font-size: 15px;width: 10%;white-space: nowrap;">实发数</th>
+                                    <th style="font-size: 15px;width: 25%;white-space: nowrap;">总金额</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--分区：页脚 -->
+                        <tfoot>
+                        </tfoot>
+                        <!-- 分区：主体 -->
+                        <div class="sti-tbl-body">
+                            <table class="table table-bordered" style="min-width: 900px;">
+                                <tbody id="tbody">
+                                <tr v-for="(item,index) in goods.datas">
+                                    <td width="5%" class="input-wid">{{index+1}}</td>
+                                    <td width="20%" class="input-wid">{{item.sname}}</td>
+                                    <td width="20%" class="input-wid">{{item.size}}</td>
+                                    <td width="5%" class="input-wid">{{item.unit}}</td>
+                                    <td width="5%" class="input-wid">{{item.price}}</td>
+                                    <td width="10%" class="input-wid">{{item.expectednum}}</td>
+                                    <td width="10%" class="input-wid">{{item.actualnum}}</td>
+                                    <td width="25%" class="input-wid">{{item.prices}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" v-on:click="close()">关闭</button>
-                </div>
-            </div><!-- /.modal-content -->
+                <div class="modal-footer" style="height: 60px;margin-top: -18px;">
+                    <div class="example" v-for='(item,index) in pictures'>
+                        <img v-bind:src="item" class="pictures">
+                        <a href="#" v-on:click="delepictores(index,goods.oid)">
+                            <img src="./img/删除2.png" class="delete" title="删除图片"/>
+                        </a>
+                    </div>
+                    <div class="add-picture">
+                        <form id="picForm">
+                            <input type="hidden" name="oid" v-model="goods.oid">
+                            <a href="#"><input type="file" id="pictures" name="pictures" multiple="multiple"
+                                               v-on:change="addpictores()"> </a>
+                        </form>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div>
+            <!--判断弹窗-->
         </div>
-        <!--判断弹窗-->
     </div>
+
 </div>
+
 
 <script type="text/javascript">
     var output = new Vue({
@@ -405,9 +436,14 @@
                 actualnum: 0//实发数
             },
             timer: [0, 0],
-            options:[]//下拉框
+            options: [],//下拉框
+            pictures: []//图片
         },
         mounted: function () {
+            $("body").on("click", ".pictures", function
+                () {
+                $(this).zoomify("zoom");
+            })
             this.do()
         },
         computed: {
@@ -478,6 +514,7 @@
                             alert(data.msg)
                         } else {
                             if (data.data) {
+                                output.pictures = data.data.picture
                                 output.goods = data.data
                                 output.xianshi = true
                             } else {
@@ -493,6 +530,7 @@
             close: function () {
                 output.xianshi = false;
                 output.goods = []
+                output.pictures = []
             },
             first: function () {
                 $.ajax({
@@ -622,7 +660,7 @@
                 output.shop.addshopxianshi = true
             },
             addSave: function () {
-                output.options=[]
+                output.options = []
                 output.shop.addshopxianshi = false
                 output.outputs.datas.push({
                     sname: output.shop.sname,
@@ -686,18 +724,18 @@
                     }
                 });
             },
-            xiugai:function(index,size){
-                output.vindex=index
+            xiugai: function (index, size) {
+                output.vindex = index
                 this.options.push(size)
             },
-            findsizes:function(item){
-                this.shop.sname=item
-                if(this.snamelist.length<=0){
-                    this.shop.sname=''
-                    this.options=[]
-                    this.shop.size=''
-                }else{
-                    if(this.shop.sname){
+            findsizes: function (item) {
+                this.shop.sname = item
+                if (this.snamelist.length <= 0) {
+                    this.shop.sname = ''
+                    this.options = []
+                    this.shop.size = ''
+                } else {
+                    if (this.shop.sname) {
                         $.ajax({
                             type: "POST",
                             url: this.url + "/output/findSize",
@@ -710,7 +748,7 @@
                                     alert(data.msg)
                                 } else {
                                     if (data.data.length > 0) {
-                                        output.options=data.data
+                                        output.options = data.data
                                     }
                                 }
                             },
@@ -722,14 +760,14 @@
                 }
             },
             //查找库存单位单价
-            findall:function(){
-                if(output.shop.sname&&output.shop.size){
+            findall: function () {
+                if (output.shop.sname && output.shop.size) {
                     $.ajax({
                         type: "POST",
                         url: this.url + "/output/callback",
                         data: {
                             sname: output.shop.sname,
-                            size:output.shop.size
+                            size: output.shop.size
                         },
 //                        async: false,
                         success: function (data) {
@@ -737,9 +775,9 @@
                                 alert(data.msg)
                             } else {
                                 if (data.data) {
-                                    output.shop.unit=data.data.unit
-                                    output.shop.price=data.data.price
-                                    output.shop.kucun=data.data.num
+                                    output.shop.unit = data.data.unit
+                                    output.shop.price = data.data.price
+                                    output.shop.kucun = data.data.num
                                 }
                             }
                         },
@@ -749,12 +787,46 @@
                     });
                 }
             },
-            //TODO 修改时下拉菜单
-            xiugaifizes:function(){
-
+            addpictores: function () {
+                var formData = new FormData($("#picForm")[0]);
+                $('#picForm')[0].reset()
+                $.ajax({
+                    url: '/pic/add',
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (value) {
+                        output.pictures = value.paths
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
             },
-            xiugaifindall:function(){
-
+            delepictores: function (index, oid) {
+                var delpaths = output.pictures[index]
+                output.pictures.splice(index, 1)
+                $.ajax({
+                    url: 'pic/delete',
+                    type: 'POST',
+                    data: {
+                        oid: oid,
+                        paths: delpaths
+                    },
+                    success: function (value) {
+                        if (value.code == 0) {
+                            alert(value.msg)
+                        } else {
+                            console.log(value.data)
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
             }
         }
     })

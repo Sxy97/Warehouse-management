@@ -40,7 +40,6 @@ html {
 	scrollbar-arrow-color:transparent;/*箭头颜色*/
 	scrollbar-track-color:transparent;/*背景颜色*/
 }
-
 a{
 	text-decoration: none;
 }
@@ -76,13 +75,21 @@ img{
 	height: 60px;
 	background: #1458a7;
 	color: #FFFFFF;
-	line-height: 70px;
+	line-height: 60px;
 	z-index: 1;
 	text-align: center;
 }
 .text{
 	position: absolute;
-	left: 40px;
+	left: 40px;	
+	text-align: center;
+}
+.text a{
+	font-family: kartika;	
+	font-size: 16px;
+	color:rgb(255,255,255);
+	line-height: 16px;
+	margin-left: 0px;
 }
 .text1{
 	position: absolute;
@@ -222,9 +229,8 @@ img{
 .userlist{
 	position: absolute;	
 	top: 90px;
-	bottom:10px;
 	left: 20px;
-	right:20px;
+	right:20px;	
 	background:#FFFFFF ;
 }
 .btn-default{
@@ -240,36 +246,34 @@ img{
 	margin-right: 34px;	
 }
 .xq-btn{    	
-    	height: 22px;
+    	height: 24px;
     	font-size: 12px;
-	 width: 60px;
-	 text-align: center;	
+	   width: 60px;	 	
 	  border-radius: 5px;
+	   border: 1px solid rgb(1,118,214) ;
     	cursor: pointer;
     	color:#FFFFFF;
     	background: rgb(1,118,214) ;
     	
     }
     .table-aa th,td{
-    	border: 1px #DDDDDD solid;
     	text-align: center;
     }
-    /*******************dialog**********************/
+   /*******************dialog**********************/
 .dialog-background{
 	position: fixed;
 	left:0;right:0;top:0; bottom: 0;
 	background: rgba(0,0,0,0.5);
 	z-index: 1000;
 }
-.dialog-background td{
-	border:none !important;
-}
+
+
 .dialog-container{
-	width: 850px; 
+	width: 960px; 
 	min-height:530px;
 	background: #fff;
 	position: absolute;
-	left: 45%; top:40%;
+	left: 40%; top:37%;bottom: 15%;
 	margin-left:-250px; margin-top: -175px;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
@@ -310,7 +314,7 @@ img{
 	background: rgba(0,0,0,0.5);
 	z-index: 1000;
 }
-.dialog-background td{
+.table2 td{
 	border:none !important;
 }
 .dialog-container1{
@@ -318,7 +322,7 @@ img{
 	min-height:460px;
 	background: #fff;
 	position: absolute;
-	left: 45%; top:40%;
+	left: 45%; top:38%;
 	margin-left:-250px; margin-top: -175px;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
@@ -327,7 +331,83 @@ img{
 .dialog-container label{
 	margin-right: 30px;
 }
+.input-wid{
+	max-width: 60px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	font-size: 14px;
+	 border: 0 none;
+	 outline: none;
+	 }	 
+	 .right-a{
+	 	text-align: right;
+	 }
+	 .left-a{
+	 	text-align: left;
+	 }
+	 .modal-body b{
+	 	font-weight: normal;
+	 	color: #666666;
+	 }
+	 .example{
+	   display: inline-block;
+	    position: relative;
+    	float: left; 
+    	width: 54px;
+    	height: 50px;
+    	margin-right: 8px;
+    	margin-left: 15px;
+    	background: #EEEEEE;
+    } 
+     .delete
+     {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 15px;
+        height: 15px;
+      }
+    .add-picture{   
+    display: inline;
+    float: left;
+    background:url(../img/添加照片.png)no-repeat;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    height: 55px;
+	width: 55px;   
+    }    
+    #pictures {
+    opacity: 0;
+    }   
+ .text-overflow { white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+
+@media (min-width: 768px) {
+	.container { max-width: 730px !important; }
+}
+.example .pictures{width: 100%;} 
 table tr th {
 	text-align: center;
 	margin: 5px ;
+}
+		/* 表格容器样式，用flex布局可保证table内容能铺满剩余空间 */
+.sti-tbl-container {
+	width: 100%;
+	overflow : hidden;
+	display : flex;
+	flex-direction: column;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+/* 设置表格的布局方式，用于宽度对齐 */
+.sti-tbl-body>table, .sti-tbl-header>table {
+    table-layout: fixed;
+}
+/* 设置表格内容容器，用于铺满整个剩余空间 */
+.sti-tbl-container .sti-tbl-body {
+    flex-grow : 1;
+    overflow-y : scroll;
 }

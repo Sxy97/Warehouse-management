@@ -24,6 +24,12 @@ exports.interceptor=function (req, res,next) {
 var needLogin = function(path){
     let noLoginPath = ['/','/login']; //不需要登陆的地址
     if(noLoginPath.includes(path) || noLoginPath.includes(path+'/')){
+        // let regex = new RegExp(/^\/orderpic\/upload_profile.*/)
+        // if(regex.test(path)){
+        //     return true
+        // }else {
+        //     return false
+        // }
         return false
     }else {
         return true

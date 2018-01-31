@@ -30,6 +30,10 @@ router.get('/userManagement',function(req, res, next){
 router.get('/personal',function(req, res, next){
     res.render('personal')
 })
+//跳转开始页
+router.get('/star-select',function(req, res, next){
+    res.render('star-select')
+})
 /**
  * 用户模块
  */
@@ -83,7 +87,9 @@ router.get('/query/findByOid/:oid',queryController.findByOid)
 router.get('/word/out/:oid',wordController.exportWord)
 
 /**
- * 入库出库单签字后图片保存 TODO （保存到服务器/用户本地）
+ * 入库出库单签字后图片保存
  */
+router.post('/pic/add',wordController.picadd)
+router.post('/pic/delete',wordController.dele)
 
 module.exports = router;
