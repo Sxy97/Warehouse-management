@@ -62,7 +62,7 @@ th{
 	font-size: 15px;
 }
 td{
-	font-size: 15px;
+	font-size: 14px;
 	border: 0;	
 }
 img{
@@ -228,6 +228,7 @@ img{
 	}
 .userlist{
 	position: absolute;	
+	height: 105%;
 	top: 90px;
 	left: 20px;
 	right:20px;	
@@ -273,7 +274,7 @@ img{
 	min-height:530px;
 	background: #fff;
 	position: absolute;
-	left: 40%; top:37%;bottom: 15%;
+	left: 40%; top:37%;
 	margin-left:-250px; margin-top: -175px;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;

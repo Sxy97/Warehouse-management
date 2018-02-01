@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/personal.css"/>
+    <link rel="stylesheet" href="css/window.css" />
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/window.js" ></script>
 </head>
 <body>
 <div id="main">
@@ -102,14 +104,14 @@
                     success: function (data) {
                         $("input[type='password']").val('');
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg);
                         } else {
-                            alert(data.data)
+                            win.alert("提示",data.data)
                             window.location.href="/"
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             }

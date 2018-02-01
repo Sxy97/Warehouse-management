@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="css/stockOut.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/zoomify.min.css"/>
-    <!--<link rel="stylesheet" href="css/jquery-ui.min.css"/>-->
+    <link rel="stylesheet" href="css/window.css"/>
+    <!--<link rel="stylesheet" href="css/jquery-ui.min.css"/>--> 
+    <script type="text/javascript" src="js/window.js"></script>
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
@@ -176,7 +178,7 @@
                         </tr>
                     </table>
                     <!---属性列表-->
-                    <div class="sti-tbl-container" style="min-height:  272px" >
+                    <div class="sti-tbl-container" style="min-height:  272px;max-height: 275px;" >
                         <!--页头-->
                         <div class="sti-tbl-header" style="padding-right:10px;">
                             <table class="table table-bordered"
@@ -462,7 +464,7 @@
                             },
                             success: function (data) {
                                 if (data.code == 0) {
-                                    alert(data.msg)
+                                    win.alert("提示",data.msg)
                                 } else {
                                     if (data.data.length > 0) {
                                         list = data.data
@@ -470,7 +472,8 @@
                                 }
                             },
                             error: function () {
-                                alert("错误");
+                            	win.alert("提示","错误");
+//                              alert("错误");
                             }
                         });
                     }
@@ -488,7 +491,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 output.num = data.data.num
@@ -496,12 +499,12 @@
                                 output.pages = data.data.pages
                                 output.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                               win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -511,19 +514,19 @@
                     url: this.url + "/query/findByOid/" + oid,
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data) {
                                 output.pictures = data.data.picture
                                 output.goods = data.data
                                 output.xianshi = true
                             } else {
-                                alert("没有该信息")
+                              win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -541,7 +544,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 output.num = data.data.num
@@ -549,12 +552,12 @@
                                 output.pages = data.data.pages
                                 output.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                               win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -568,7 +571,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     output.num = data.data.num
@@ -576,16 +579,17 @@
                                     output.pages = data.data.pages
                                     output.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                   win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                          win.alert("提示","错误");
                         }
                     });
                 } else {
-                    alert("已经是第一页了")
+                	
+                    win.alert('提示',"已经是第一页了");
                 }
             },
             down: function () {
@@ -598,7 +602,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     output.num = data.data.num
@@ -606,16 +610,17 @@
                                     output.pages = data.data.pages
                                     output.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                  win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 } else {
-                    alert("已经是最后一页了")
+                 
+                   win.alert("提示","已经是最后一页了");                  
                 }
             },
             last: function () {
@@ -627,7 +632,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 output.num = data.data.num
@@ -635,12 +640,13 @@
                                 output.pages = data.data.pages
                                 output.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                            	win.alert("提示","没有该信息");
+//                              alert("没有该信息")
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -701,7 +707,7 @@
                     traditional: true,//这里设置为true
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             output.addxianshi = false;
                             output.outputs.datas = []
@@ -720,7 +726,7 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -745,7 +751,7 @@
 //                        async: false,
                             success: function (data) {
                                 if (data.code == 0) {
-                                    alert(data.msg)
+                                    win.alert("提示",data.msg)
                                 } else {
                                     if (data.data.length > 0) {
                                         output.options = data.data
@@ -753,7 +759,7 @@
                                 }
                             },
                             error: function () {
-                                alert("错误");
+                               win.alert("提示","错误");
                             }
                         });
                     }
@@ -772,7 +778,7 @@
 //                        async: false,
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data) {
                                     output.shop.unit = data.data.unit
@@ -782,7 +788,7 @@
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 }
@@ -818,7 +824,7 @@
                     },
                     success: function (value) {
                         if (value.code == 0) {
-                            alert(value.msg)
+                            win.alert("提示",value.msg);
                         } else {
                             console.log(value.data)
                         }

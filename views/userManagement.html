@@ -6,8 +6,10 @@
     <link rel="Shortcut Icon" href="E:\test-master\public\img\旅徽PNG.png" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/window.css" />
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/window.js" ></script>
 </head>
 <body>
 <div id="main">
@@ -302,7 +304,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg);
                         } else {
                             if (data.data.result.length > 0) {
                                 user.feyexianshi=true
@@ -318,7 +320,8 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                    	win.alert("提示","错误");
+//                      win.alert("提示","错误");;
                     }
                 });
             },
@@ -331,7 +334,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg);
                         } else {
                             if (data.data.result.length > 0) {
                                 user.num = data.data.num
@@ -339,12 +342,12 @@
                                 user.pages = data.data.pages
                                 user.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -358,7 +361,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg);
                             } else {
                                 if (data.data.result.length > 0) {
                                     user.num = data.data.num
@@ -366,16 +369,16 @@
                                     user.pages = data.data.pages
                                     user.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                    win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 } else {
-                    alert("已经是第一页了")
+                    win.alert("提示","已经是第一页了");
                 }
             },
             down: function () {
@@ -388,7 +391,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     user.num = data.data.num
@@ -396,16 +399,16 @@
                                     user.pages = data.data.pages
                                     user.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                    win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 } else {
-                    alert("已经是最后一页了")
+                    win.alert("提示","已经是最后一页了")
                 }
             },
             last: function () {
@@ -417,7 +420,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 user.num = data.data.num
@@ -425,12 +428,12 @@
                                 user.pages = data.data.pages
                                 user.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -469,13 +472,13 @@
                     traditional: true,//这里设置为true
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             user.do()
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -491,7 +494,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             user.addxianshi = false
                             user.user.password = ''
@@ -502,7 +505,7 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -527,7 +530,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             user.bjxianshi = false
                             user.user.uid = ''
@@ -539,7 +542,7 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -553,7 +556,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 user.test=''
                                 user.feyexianshi=false
@@ -561,7 +564,7 @@
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
 

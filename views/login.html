@@ -5,8 +5,10 @@
     <title>用户登录</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="css/window.css" />
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/window.js" ></script>
     <style type="text/css">
         .box a:hover {
             text-decoration: none;
@@ -52,14 +54,14 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             document.cookie="state="+data.data.state;
                             window.location.href="star-select"
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },

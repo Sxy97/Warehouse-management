@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="css/stockIn.css">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/zoomify.min.css"/> 
+    <link rel="stylesheet" type="text/css" href="css/window.css"/>
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/window.js" ></script>
     <script type="text/javascript" src="js/zoomify.min.js" ></script>
     <script type="text/javascript">
         //执行一个laydate实例
@@ -396,7 +398,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg);
                         } else {
                             if (data.data.result.length > 0) {
                                 input.num = data.data.num
@@ -404,12 +406,12 @@
                                 input.pages = data.data.pages
                                 input.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                            	win.alert('提示',"没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -419,19 +421,19 @@
                     url: this.url + "/query/findByOid/" + oid,
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data) {
                                input.pictures = data.data.picture
                                 input.goods = data.data
                                 input.xianshi = true
                             } else {
-                                alert("没有该信息")
+                              win.alert('提示',"没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -449,7 +451,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 input.num = data.data.num
@@ -457,12 +459,12 @@
                                 input.pages = data.data.pages
                                 input.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -476,7 +478,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     input.num = data.data.num
@@ -484,16 +486,16 @@
                                     input.pages = data.data.pages
                                     input.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                   win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误"); 
                         }
                     });
                 } else {
-                    alert("已经是第一页了")
+                    win.alert("提示",'已经是第一页了');
                 }
             },
             down: function () {
@@ -506,7 +508,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     input.num = data.data.num
@@ -514,16 +516,16 @@
                                     input.pages = data.data.pages
                                     input.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                    win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误"); 
                         }
                     });
                 } else {
-                    alert("已经是最后一页了")
+                    win.alert('提示',"已经是最后一页了");
                 }
             },
             last: function () {
@@ -535,7 +537,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 input.num = data.data.num
@@ -543,12 +545,12 @@
                                 input.pages = data.data.pages
                                 input.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误"); 
                     }
                 });
             },
@@ -601,7 +603,7 @@
                     traditional: true,//这里设置为true
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             input.addxianshi = false
                             input.inputs.datas = []
@@ -617,7 +619,7 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                    	win.alert("提示","错误");                  
                     }
                 });
             },
@@ -652,7 +654,7 @@
                     },
                     success: function (value) {
                         if (value.code == 0) {
-                            alert(value.msg)
+                            win.alert("提示",value.msg)
                         } else {
                             console.log(value.data)
                         }

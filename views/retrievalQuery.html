@@ -6,11 +6,13 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/retrievalQuery.css">
-    <link rel="stylesheet" href="css/zoomify.min.css"/> 
+    <link rel="stylesheet" href="css/zoomify.min.css"/>
+    <link rel="stylesheet" href="css/window.css" />
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/retrievalQuery.js"></script>
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/window.js" ></script>
     <script type="text/javascript" src="js/zoomify.min.js" ></script>
     <script type="text/javascript">
         //执行一个laydate实例
@@ -136,7 +138,7 @@
                 <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
                 <!--</div>-->
                 <div style="overflow-x: auto;margin-top: 10px;">
-                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                    <table class="table table-bordered table-hover" style="min-width: 1000px">
                         <!--页头-->
                         <thead>
                         <tr style="background: #1458a7;color: #fff;height: 30px;">
@@ -240,7 +242,7 @@
                 <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
                 <!--</div>-->
                 <div style="overflow-x: auto;margin-top: 10px;">
-                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                    <table class="table table-bordered table-hover" style="min-width: 1000px">
                         <!--页头-->
                         <thead>
                         <tr style="background: #1458a7;color: #fff;height: 30px;">
@@ -330,7 +332,7 @@
                 <!--<span class="oddicon-out" id="oddicon-out"><img src="img/导出(1).png"/><br/>导出</span>-->
                 <!--</div>-->
                 <div style="overflow-x: auto;margin-top: 10px;">
-                    <table class="table table-bordered table-hover" style="min-width: 1024px">
+                    <table class="table table-bordered table-hover" style="min-width: 1000px">
                         <!--页头-->
                         <thead>
                         <tr style="background: #1458a7;color: #fff;height: 30px;">
@@ -520,7 +522,7 @@
                         </tr>
                     </table>
                      <!---属性列表-->
-               <div class="sti-tbl-container"  style="min-height: 310px;max-height: 311px; margin-left: 10px;margin-top: 20px;">
+               <div class="sti-tbl-container"  style="height: 310px; margin-left: 10px;margin-top: 20px;">
                         <!--页头-->
                         <div class="sti-tbl-header" style="padding-right:10px;">
                         	<table class="table table-bordered" style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
@@ -558,7 +560,7 @@
                 </div>
                </div>
             </div>      
-                <div class="modal-footer" style="height: 60px;margin-top: -22px;">
+                <div class="modal-footer" style="height: 60px;margin-top: -15px;">
                     <div class="example" v-for='(item,index) in pictures'>
                         <img v-bind:src="item" class="pictures">
                         <a href="#" v-on:click="delepictores(index,goods.oid)">
@@ -620,7 +622,7 @@
                         </tr>
                     </table>
                     <!---属性列表-->
-               <div class="sti-tbl-container"  style="min-height: 310px;max-height: 311px; margin-left: 10px;margin-top: 20px;">
+               <div class="sti-tbl-container"  style="height: 310px; margin-left: 10px;margin-top: 20px;">
                         <!--页头-->
                         <div class="sti-tbl-header" style="padding-right:10px;">
                         	<table class="table table-bordered" style="min-width: 900px;margin-bottom: 0px;border-bottom-style: none;">
@@ -753,7 +755,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.output.xianshi = true
@@ -762,12 +764,13 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                            	win.alert("提示","没有该信息");
+//                              alert("没有该信息")
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
 
                 });
@@ -788,7 +791,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -796,18 +799,18 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                              win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
             outon: function () {
                 if (this.page - 1 <= 0) {
-                    alert("没有上一页了")
+                    win.alert("提示","没有上一页了")
                 } else {
                     $.ajax({
                         type: "POST",
@@ -824,7 +827,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -832,19 +835,19 @@
                                     rightDiv1.pages = data.data.pages
                                     rightDiv1.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                    win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 }
             },
             outdown: function () {
                 if (this.page + 1 > this.pages) {
-                    alert("已经是最后一页了")
+                    win.alert("提示","已经是最后一页了")
                 } else {
                     $.ajax({
                         type: "POST",
@@ -861,7 +864,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -869,12 +872,12 @@
                                     rightDiv1.pages = data.data.pages
                                     rightDiv1.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                   win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                           win.alert("提示","错误");
                         }
                     });
                 }
@@ -895,7 +898,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -903,12 +906,12 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -947,7 +950,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.input.xianshi = true
@@ -956,12 +959,12 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
 
                 });
@@ -982,7 +985,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -990,18 +993,18 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                               win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
             inon: function () {
                 if (this.page - 1 <= 0) {
-                    alert("没有上一页了")
+                    win.alert("提示","没有上一页了")
                 } else {
                     $.ajax({
                         type: "POST",
@@ -1018,7 +1021,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -1026,19 +1029,19 @@
                                     rightDiv1.pages = data.data.pages
                                     rightDiv1.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                   win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                           win.alert("提示","错误");
                         }
                     });
                 }
             },
             indown: function () {
                 if (this.page + 1 > this.pages) {
-                    alert("已经是最后一页了")
+                    win.alert("提示","已经是最后一页了")
                 } else {
                     $.ajax({
                         type: "POST",
@@ -1055,7 +1058,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -1063,12 +1066,12 @@
                                     rightDiv1.pages = data.data.pages
                                     rightDiv1.goodslist = data.data.result
                                 } else {
-                                    alert("没有该信息")
+                                    win.alert("提示","没有该信息");
                                 }
                             }
                         },
                         error: function () {
-                            alert("错误");
+                            win.alert("提示","错误");
                         }
                     });
                 }
@@ -1089,7 +1092,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -1097,12 +1100,12 @@
                                 rightDiv1.pages = data.data.pages
                                 rightDiv1.goodslist = data.data.result
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -1133,18 +1136,18 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.length > 0) {
                                 rightDiv1.good.fyxianshi = false
                                 rightDiv1.goodslist = data.data
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -1157,7 +1160,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -1171,13 +1174,13 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
             goodon: function () {
                 if (this.page - 1 <= 0) {
-                    alert("没有上一页了")
+                    win.alert("提示","没有上一页了")
                 } else {
                     $.ajax({
                         type: "GET",
@@ -1187,7 +1190,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -1201,14 +1204,14 @@
                             }
                         },
                         error: function () {
-                            alert("错误");
+                          win.alert("提示","错误");
                         }
                     });
                 }
             },
             gooddown: function () {
                 if (this.page + 1 > this.pages) {
-                    alert("已经是最后一页了")
+                    win.alert("提示","已经是最后一页了")
                 } else {
                     $.ajax({
                         type: "GET",
@@ -1218,7 +1221,7 @@
                         },
                         success: function (data) {
                             if (data.code == 0) {
-                                alert(data.msg)
+                                win.alert("提示",data.msg)
                             } else {
                                 if (data.data.result.length > 0) {
                                     rightDiv1.num = data.data.num
@@ -1232,7 +1235,7 @@
                             }
                         },
                         error: function () {
-                            alert("错误");
+                           win.alert("提示","错误");
                         }
                     });
                 }
@@ -1246,7 +1249,7 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -1260,7 +1263,7 @@
                         }
                     },
                     error: function () {
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -1281,7 +1284,7 @@
                         if (data.code == 0) {
                             rightDiv1.good.xianshi = false
                             rightDiv1.good.fyxianshi = false
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data.result.length > 0) {
                                 rightDiv1.num = data.data.num
@@ -1297,7 +1300,7 @@
                     error: function () {
                         rightDiv1.good.xianshi = false
                         rightDiv1.good.fyxianshi = false
-                        alert("错误");
+                       win.alert("提示","错误");
                     }
                 });
             },
@@ -1308,19 +1311,19 @@
                     url: this.url + "/query/findByOid/" + oid,
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data) {
                                 rightDiv1.pictures = data.data.picture
                                 rightDiv1.goods = data.data
                                 rightDiv1.output.xqxianshi = true
                             } else {
-                                alert("没有该信息")
+                                win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -1335,19 +1338,19 @@
                     url: this.url + "/query/findByOid/" + oid,
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             if (data.data) {
                                 rightDiv1.pictures = data.data.picture
                                 rightDiv1.goods = data.data
                                 rightDiv1.input.xqxianshi = true
                             } else {
-                                alert("没有该信息")
+                               win.alert("提示","没有该信息");
                             }
                         }
                     },
                     error: function () {
-                        alert("错误");
+                        win.alert("提示","错误");
                     }
                 });
             },
@@ -1366,14 +1369,15 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
-                            alert(data.msg)
+                            win.alert("提示",data.msg)
                         } else {
                             rightDiv1.querylist = data.data
                             rightDiv1.good.xqxianshi = true
                         }
                     },
                     error: function () {
-                        alert("错误");
+                    	win.alert("提示","错误");
+//                      alert("错误");
                     }
                 });
             },
@@ -1438,7 +1442,7 @@
                     },
                     success: function (value) {
                         if (value.code == 0) {
-                            alert(value.msg)
+                            win.alert("提示",value.msg)
                         } else {
                             console.log(value.data)
                         }
