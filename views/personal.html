@@ -86,7 +86,7 @@
     var rightDiv = new Vue({
         el: "#main",
         data: {
-            cookie:document.cookie.split('=')[1],
+            cookie:document.cookie.split(';')[1].split('=')[1],
             url: "",
             newpassowrd: "",
             oldpassword: ""

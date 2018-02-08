@@ -355,7 +355,7 @@
     var input = new Vue({
         el: "#main",
         data: {
-            cookie:document.cookie.split('=')[1],
+            cookie:document.cookie.split(';')[1].split('=')[1],
             vindex: -1,
             url: "",
             xianshi: false,

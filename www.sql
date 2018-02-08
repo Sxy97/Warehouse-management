@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS `input` (
   PRIMARY KEY (`sid`),
   KEY `sname` (`sname`),
   KEY `oid` (`oid`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='入库表';
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COMMENT='入库表';
 
--- 正在导出表  outofstorage.input 的数据：~100 rows (大约)
+-- 正在导出表  outofstorage.input 的数据：~97 rows (大约)
 /*!40000 ALTER TABLE `input` DISABLE KEYS */;
 INSERT INTO `input` (`sid`, `sname`, `size`, `unit`, `price`, `num`, `prices`, `oid`) VALUES
 	(1, '电视机', '海信T60', '台', 6000.00, 2, 12000.00, 'RK84481515984421403'),
@@ -133,7 +133,8 @@ INSERT INTO `input` (`sid`, `sname`, `size`, `unit`, `price`, `num`, `prices`, `
 	(97, '中国移动网上因', '鼎折覆餗', '地方', 4.00, 6, 24.00, 'RK84871517383975182'),
 	(98, 'sf5', 'sf', 'f', 5.00, 5, 25.00, 'RK75821517390093585'),
 	(99, '等等撒', '发', '是', 56.00, 666, 37296.00, 'RK58531517393881632'),
-	(100, '是是是', '是', '是', 45.00, 78, 3510.00, 'RK58531517393881632');
+	(100, '是是是', '是', '是', 45.00, 78, 3510.00, 'RK58531517393881632'),
+	(101, '22', '22', '22', 3.00, 3, 9.00, 'RK91291517474345682');
 /*!40000 ALTER TABLE `input` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.orders 结构
@@ -150,11 +151,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
--- 正在导出表  outofstorage.orders 的数据：~97 rows (大约)
+-- 正在导出表  outofstorage.orders 的数据：~100 rows (大约)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`, `time`, `type`, `picture`) VALUES
 	('CK11271515984449636', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:29', '0', NULL),
-	('CK11991517293831034', '肤色', '收到', '电视', 'admin', '2018-01-30 14:30:31', '0', '/orderpic/upload_ad716eace9866ec75f845957120f1827.jpg'),
+	('CK11991517293831034', '肤色', '收到', '电视', 'admin', '2018-01-30 14:30:31', '0', ''),
 	('CK18501516430565585', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:45', '0', NULL),
 	('CK19961516430567939', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:47', '0', ''),
 	('CK20361516430532033', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:12', '0', NULL),
@@ -164,26 +165,27 @@ INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`,
 	('CK28721516430535353', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:15', '0', NULL),
 	('CK30521516430532621', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:12', '0', NULL),
 	('CK30721516430528938', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:08', '0', NULL),
-	('CK31321516430568915', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:48', '0', '/orderpic/upload_c82c49481c0e5b99f99607e16fb43583,/orderpic/upload_0239c6e7556b89e646418cf2a00abe1d'),
+	('CK31321516430568915', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:48', '0', ''),
 	('CK34601516785716503', 'sadasd', 'afaf', 'afasf', 'admin', '2018-01-24 17:21:56', '0', ''),
 	('CK35181516430566009', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:46', '0', NULL),
 	('CK37091516430528174', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:08', '0', NULL),
 	('CK37561516430564223', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:44', '0', NULL),
 	('CK38691516430534869', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:14', '0', NULL),
 	('CK43971516430532205', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:12', '0', NULL),
-	('CK46261517393774651', 'sd', 'ds', 'sd', 'admin', '2018-01-31 18:16:14', '0', '/orderpic/upload_e272ca1c4a1eda93f07120ea3cadf82a.jpg'),
-	('CK46981516430540624', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:20', '0', NULL),
+	('CK46261517393774651', 'sd', 'ds', 'sd', 'admin', '2018-01-31 18:16:14', '0', ''),
+	('CK46981516430540624', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:20', '0', ''),
 	('CK47031516430562914', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:42', '0', NULL),
 	('CK50541516430538744', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:18', '0', ''),
 	('CK56461517384388960', '地方', '东方闪电', '第三方的', 'admin', '2018-01-31 15:39:48', '0', ''),
 	('CK59401516430568395', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:48', '0', ''),
+	('CK61181517474294844', '33', '33', '33', 'admin', '2018-02-01 16:38:14', '0', ''),
 	('CK62621516430529578', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:09', '0', NULL),
 	('CK65821516430529189', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:09', '0', NULL),
 	('CK66101516430564672', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:44', '0', NULL),
 	('CK67741515984447676', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:27', '0', NULL),
 	('CK67881516430532794', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:12', '0', ''),
 	('CK68731516430534719', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:14', '0', NULL),
-	('CK68891517385819803', 'dfs', '33', 'dsfs', 'admin', '2018-01-31 16:03:39', '0', '/orderpic/upload_9ce7ea9db3a4f4d69a450f59bbaa5ba2.jpg'),
+	('CK68891517385819803', 'dfs', '33', 'dsfs', 'admin', '2018-01-31 16:03:39', '0', ''),
 	('CK74001516430565138', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:45', '0', NULL),
 	('CK74461516430536801', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:16', '0', NULL),
 	('CK77621516430535170', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:15', '0', NULL),
@@ -191,19 +193,20 @@ INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`,
 	('CK79321516430566898', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:46', '0', NULL),
 	('CK80291516430566429', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:46', '0', ''),
 	('CK80501516430536959', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:16', '0', NULL),
+	('CK84061517566307082', 'dsf', 'dsf', 'dsf', 'admin', '2018-02-02 18:11:47', '0', ''),
 	('CK87261516788934016', 'ss', 'sdfaf', 'dsfds', 'admin', '2018-01-24 18:15:33', '0', ''),
 	('CK89361516430528512', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:08', '0', NULL),
 	('CK90221516430528337', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:08', '0', NULL),
-	('CK90341515984445132', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:25', '0', NULL),
+	('CK90341515984445132', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:25', '0', ''),
 	('CK90651516430527908', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:07', '0', NULL),
 	('CK92101516430532386', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:12', '0', NULL),
 	('CK94461516430528685', '炊事班', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:42:08', '0', NULL),
-	('CK95721516790519563', 'sfdsf', 'sgd', 'sdg', 'admin', '2018-01-24 18:41:59', '0', '/orderpic/upload_6415b82658a5554aa324466df57c964f'),
+	('CK95721516790519563', 'sfdsf', 'sgd', 'sdg', 'admin', '2018-01-24 18:41:59', '0', ''),
 	('RK11281516430501491', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:41', '1', NULL),
 	('RK12321516430500686', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:40', '1', NULL),
 	('RK12671516789264255', '2', '阿发', '阿发', 'admin', '2018-01-24 18:21:04', '1', ''),
 	('RK14721516774856454', '2', '萨达', '阿凡达', 'admin', '2018-01-24 14:20:56', '1', NULL),
-	('RK15541517368247953', '1', 'admin', '的实打实的', 'admin', '2018-01-31 11:10:47', '1', '/orderpic/upload_bc14e845d840f8bf6c5e3904cba05208.jpg,/orderpic/upload_ef23b75236f05c5327a7fbfe16f8a290.jpg,/orderpic/upload_e3284ee8e3f935982aacb45f57d202ec.jpg,/orderpic/upload_190947107e813584428912146c99e10f.jpg,/orderpic/upload_091b7059641839b2d4a179c9c2f5a4a7.jpg'),
+	('RK15541517368247953', '1', 'admin', '的实打实的', 'admin', '2018-01-31 11:10:47', '1', ''),
 	('RK16811516430499884', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:39', '1', NULL),
 	('RK18061516784564810', '1', '萨法', '佛挡杀佛', 'admin', '2018-01-24 17:02:44', '1', NULL),
 	('RK18121516430503524', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:43', '1', NULL),
@@ -223,12 +226,12 @@ INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`,
 	('RK44921516430502102', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:42', '1', NULL),
 	('RK44981516430500514', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:40', '1', NULL),
 	('RK45641516430509835', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:49', '1', NULL),
-	('RK48491516789248295', '1', '十多个', '大', 'admin', '2018-01-24 18:20:48', '1', NULL),
+	('RK48491516789248295', '1', '十多个', '大', 'admin', '2018-01-24 18:20:48', '1', ''),
 	('RK52041516789207170', '1', '按时收费', '对方水电费', 'admin', '2018-01-24 18:20:07', '1', NULL),
 	('RK53441516430504066', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:44', '1', NULL),
 	('RK55301516430500367', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:40', '1', NULL),
 	('RK55961516430501790', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:41', '1', NULL),
-	('RK58531517393881632', '1', '收到', '颠三倒四', 'admin', '2018-01-31 18:18:01', '1', '/orderpic/upload_f82d0058947b54d58903a6ee92352e4b.jpg,/orderpic/upload_ba9f773fd4a8bd42de372447b9ce10db.jpg'),
+	('RK58531517393881632', '1', '收到', '颠三倒四', 'admin', '2018-01-31 18:18:01', '1', ''),
 	('RK61941516430500837', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:40', '1', NULL),
 	('RK63271516430498908', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:38', '1', NULL),
 	('RK63971515984425819', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:05', '1', ''),
@@ -239,17 +242,18 @@ INSERT INTO `orders` (`oid`, `com_cat`, `onepeople`, `twopeople`, `threepeople`,
 	('RK74101516430502883', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:42', '1', NULL),
 	('RK75821517390093585', '1', 'fa', 'dsfds', 'admin', '2018-01-31 17:14:53', '1', ''),
 	('RK84481515984421403', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:01', '1', ''),
-	('RK84871517383975182', '1', '电风扇', '发送到', 'admin', '2018-01-31 15:32:55', '1', '/orderpic/upload_0e7f1b019990bf62d28c210eee6157b9.jpg'),
-	('RK85111516430504381', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:44', '1', NULL),
+	('RK84871517383975182', '1', '电风扇', '发送到', 'admin', '2018-01-31 15:32:55', '1', ''),
+	('RK85111516430504381', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:44', '1', ''),
 	('RK87501516430500044', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:40', '1', NULL),
 	('RK87511516430499561', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:39', '1', NULL),
 	('RK88411515984423666', '1', 'onepeople', 'twopeople', 'admin', '2018-01-15 10:47:03', '1', NULL),
 	('RK90671516756301415', '1', '阿萨', '家具', '123456', '2018-01-24 09:11:41', '1', NULL),
+	('RK91291517474345682', '1', '22', '22', 'admin', '2018-02-01 16:39:05', '1', ''),
 	('RK93631516430502518', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:42', '1', NULL),
 	('RK94231516430501313', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:41', '1', NULL),
 	('RK97151516430501637', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:41', '1', NULL),
 	('RK98321516430503693', '1', 'onepeople', 'twopeople', 'admin', '2018-01-20 14:41:43', '1', NULL),
-	('RK98671516790570920', '1', '官方', '的深V广东省', 'admin', '2018-01-24 18:42:50', '1', NULL);
+	('RK98671516790570920', '1', '官方', '的深V广东省', 'admin', '2018-01-24 18:42:50', '1', '');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.output 结构
@@ -266,9 +270,9 @@ CREATE TABLE IF NOT EXISTS `output` (
   PRIMARY KEY (`sid`),
   KEY `sname` (`sname`),
   KEY `oid` (`oid`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COMMENT='出库表';
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COMMENT='出库表';
 
--- 正在导出表  outofstorage.output 的数据：~89 rows (大约)
+-- 正在导出表  outofstorage.output 的数据：~91 rows (大约)
 /*!40000 ALTER TABLE `output` DISABLE KEYS */;
 INSERT INTO `output` (`sid`, `sname`, `size`, `unit`, `price`, `expectednum`, `actualnum`, `prices`, `oid`) VALUES
 	(1, '电视机', '海信T60', '台', 6000.00, 2, 2, 6000.00, 'CK90341515984445132'),
@@ -359,7 +363,9 @@ INSERT INTO `output` (`sid`, `sname`, `size`, `unit`, `price`, `expectednum`, `a
 	(86, '中性笔', '齐心', '支', 1.50, 67, 67, 100.50, 'CK11991517293831034'),
 	(87, '中国移动网上因', '鼎折覆餗', '地方', 4.00, 4, 4, 16.00, 'CK56461517384388960'),
 	(88, '中国移动网上因', '鼎折覆餗', '地方', 4.00, 2, 2, 8.00, 'CK68891517385819803'),
-	(89, '电机', '萨法', '个', 4.00, 2, 2, 8.00, 'CK46261517393774651');
+	(89, '电机', '萨法', '个', 4.00, 2, 2, 8.00, 'CK46261517393774651'),
+	(90, '华为', '的飒飒', '个', 1111.00, 33, 33, 36663.00, 'CK61181517474294844'),
+	(91, '中性笔', '齐心', '支', 1.50, 55, 44, 66.00, 'CK84061517566307082');
 /*!40000 ALTER TABLE `output` ENABLE KEYS */;
 
 -- 导出  表 outofstorage.user 结构
