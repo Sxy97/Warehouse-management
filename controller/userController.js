@@ -26,6 +26,7 @@ exports.login = function (req, res) {
                         writeJson(res, 0, "账号密码不正确")
                     } else {
                         delete result[0].password
+                        res.cookie('state', result[0].state);
                         req.session.user = result[0];
                         writeJson(res, 1, "", result[0])
                     }

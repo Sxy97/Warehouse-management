@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/personal.css"/>
     <link rel="stylesheet" href="css/window.css" />
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/window.js" ></script>
 </head>
 <body>
@@ -86,7 +86,7 @@
     var rightDiv = new Vue({
         el: "#main",
         data: {
-            cookie:document.cookie.split(';')[1].split('=')[1],
+            cookie:document.cookie.split('=')[1],
             url: "",
             newpassowrd: "",
             oldpassword: ""

@@ -12,7 +12,7 @@
     <script type="text/javascript" src="js/window.js"></script>
     <script type="text/javascript" src="js/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/zoomify.min.js"></script>
     <script type="text/javascript">
@@ -411,7 +411,7 @@
     var output = new Vue({
         el: "#main",
         data: {
-            cookie: document.cookie.split(';')[1].split('=')[1],
+            cookie: document.cookie.split('=')[1],
             vindex: -1,
             url: "",
             xianshi: false,
@@ -796,6 +796,19 @@
             addpictores: function () {
                 var formData = new FormData($("#picForm")[0]);
                 $('#picForm')[0].reset()
+//                var xhr = new XMLHttpRequest();
+//                xhr.upload.addEventListener("progress", function showProgress(event){
+//                    //已经上传的字节数
+//                    var loaded=event.loaded;
+//                    //文件总的字节数
+//                    var total=event.total;
+//                    //上传进度
+//                    var percent = (loaded / total) * 100 + "%";
+//                    console.log(percent)
+//                })
+//                //上传文件要发送post的ajax请求
+//                xhr.open("POST", "/pic/add");
+//                xhr.send(formData);
                 $.ajax({
                     url: '/pic/add',
                     type: 'POST',

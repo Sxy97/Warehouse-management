@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/star-select.css"/>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue.min.js"></script>
 </head>
 <body>
 <div id="main">
@@ -36,7 +36,7 @@
     var kaishi = new Vue({
         el: "#main",
         data: {
-            cookie: document.cookie.split(';')[1].split('=')[1],
+            cookie: document.cookie.split('=')[1],
         }
     })
 </script>
