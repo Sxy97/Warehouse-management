@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/window.js" ></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
 </head>
 <body>
 <div id="main">
@@ -270,7 +271,7 @@
     var user = new Vue({
         el: "#main",
         data: {
-            cookie:document.cookie.split('=')[1],
+            cookie:$.cookie('state'),
             url: "",
             bjxianshi: false,
             feyexianshi:true,

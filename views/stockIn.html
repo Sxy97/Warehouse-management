@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/window.js" ></script>
     <script type="text/javascript" src="js/zoomify.min.js" ></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
     <script type="text/javascript">
         //执行一个laydate实例
         laydate.render({
@@ -355,7 +356,7 @@
     var input = new Vue({
         el: "#main",
         data: {
-            cookie:document.cookie.split('=')[1],
+            cookie:$.cookie('state'),
             vindex: -1,
             url: "",
             xianshi: false,
